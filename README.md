@@ -28,7 +28,9 @@ We decided to use two datasets from Kaggle in the topic of beer. These two datas
 
 #### 1- [Breweries, reviews : ](https://www.kaggle.com/datasets/ankurnapa/brewery-dataset?select=beers.csv)
 
-- beers.csv : 
+This dataset is made up of three files, the data seems to be well organized and clean, with consistency in each column (string format, etc.). The data is from 1996 to 2018, and contains 9'073'128 reviews of 358'873 beers from 50'347 breweries. The data is organized as follows :
+
+- beers.csv (358'873 entries): 
     - id : beer tag
     - name : beer name
     - brewery_id : brewery tag
@@ -40,7 +42,7 @@ We decided to use two datasets from Kaggle in the topic of beer. These two datas
     - notes : notes about the beer
     - retired : Whether the beer is still available (False), or is out of the market (True) 
 
-- breweries.csv
+- breweries.csv (50'347 entries) :
     - id : brewery tag
     - name : brewery name
     - city : brewery city of origin
@@ -49,7 +51,7 @@ We decided to use two datasets from Kaggle in the topic of beer. These two datas
     - notes : notes about the brewery
     - types : type of establishment (Brewery, Bar, Shop, etc.)
 
-- reviews.csv
+- reviews.csv (9'073'128 entries) : 
     - beer_id : beer tag
     - username : username of the reviewer
     - date : date of the review
@@ -63,7 +65,9 @@ We decided to use two datasets from Kaggle in the topic of beer. These two datas
 
 #### 2- [Beer Aromas (Tasting profiles): ](https://www.kaggle.com/datasets/stephenpolozoff/top-beer-information)
 
-- beer_data_set.csv
+A dataset of up to 50 top-rated beers across 112 styles, 5558 beers in total. This data comes from BeerAdvocate, a website that allows users to rate and review beers. The data is organized as follows :
+
+- beer_data_set.csv (5558 entries) :
 
     - Name : Beer name
     - key : Unique key given to each beer
