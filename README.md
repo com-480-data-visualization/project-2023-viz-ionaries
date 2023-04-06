@@ -105,6 +105,10 @@ Our motivation for this project is to help beer enthusiasts and industry profess
 > Pre-processing of the data set you chose
 > - Show some basic statistics and get insights about the data
 
+This analysis can be seen in the file : dataset_analysis.ipynb
+
+We first started by looking at the data and trying to understand what it contained. We then looked at the different types of data and how they were distributed. 
+
 ### Related work
 
 
