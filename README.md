@@ -123,7 +123,16 @@ We also merged the data with their respective breweries.
 
 #### Analysis
 
+##### 
+
+We compared the average rating of beer styles, grouping them by country. 
+
 ![](img/beer_style_rating_per_country.png)
+
+Without surprise, the belgians seem to be making the best Belgian Blonde, but not by far ! We can also see that Lager beer seems to be less liked for every country. Oddly enough (or not) Alcohol-free beers seem to be have less success. Even weirder, Great Britain seems to have the best Alcohol free beers by far. They are the only country to make better non-alcoholic beer than some of the alcoholic types.
+
+Speaking on the impact of alcohol, we wanted to see if the
+
 -impact of seasons
 
 ### Related work
