@@ -123,7 +123,8 @@ We also merged the data with their respective breweries.
 
 #### Analysis
 
-##### 
+
+##### Beer style per country
 
 We compared the average rating of beer styles, grouping them by country. 
 
@@ -131,9 +132,25 @@ We compared the average rating of beer styles, grouping them by country.
 
 Without surprise, the belgians seem to be making the best Belgian Blonde, but not by far ! We can also see that Lager beer seems to be less liked for every country. Oddly enough (or not) Alcohol-free beers seem to be have less success. Even weirder, Great Britain seems to have the best Alcohol free beers by far. They are the only country to make better non-alcoholic beer than some of the alcoholic types.
 
-Speaking on the impact of alcohol, we wanted to see if the
+##### Alcohol trend
 
--impact of seasons
+Speaking on the impact of alcohol, we wanted to see if there is a trend on the alcohol content of beers.
+
+![](img/alcohol.png)
+
+It appears that there is no general trend in alcohol content in general. Nevertheless, some types of beer seem to have a steady in increase in alcohol volume, like stouts or ambree. Some beers seem to have lost some alcohol content like smoked beers or IPAs. Most of the other types of beer have kept similar alcohol contents. So it might seem that making beers more alcoholic is not the only factor to make good beers !
+
+##### Tastes in each beer type
+
+We made a spider plot of the aromatic profile of the average 50 best and 50 worst beer per style. The blue is representing the average of the top 50 beers while the orange represents the average worst 50 beers.
+
+![](img/taste_per_beertype.png)
+
+The general trend is that beers that have the most 'character' are more preferred. Indeed, most of the time the worst beers seem to have less aroma.
+
+A notable trend is that fruity beers seem to be very well liked by the reviewers. Also, IPAs are supposed be hoppy beers but somehow the worst rated IPAs are the one who have a hoppy taste. Here we can clearly see that brewers have adapted the IPA genre to the consumer's tastes
+
+
 
 ### Related work
 
