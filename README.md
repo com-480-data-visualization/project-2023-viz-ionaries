@@ -115,7 +115,16 @@ Our motivation for this project is to help beer enthusiasts and industry profess
 
 This analysis can be seen in the file : dataset_analysis.ipynb
 
-We first started by looking at the data and trying to understand what it contained. We then looked at the different types of data and how they were distributed. 
+#### Preprocessing
+
+We started by preprocessing the data data. For example, the breweries had several labels like 'bar', 'to-go' or 'eatery' written in a list-like fashion. To make it easier to analyse we transformed this list into a one-hot encoding representation.
+
+We also merged the data with their respective breweries.
+
+#### Analysis
+
+![](img/beer_style_rating_per_country.png =250x250)
+-impact of seasons
 
 ### Related work
 
