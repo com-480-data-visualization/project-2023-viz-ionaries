@@ -123,7 +123,7 @@ We also merged the data with their respective breweries.
 
 #### Analysis
 
-![](img/beer_style_rating_per_country.png =250x250)
+![](img/beer_style_rating_per_country.png)
 -impact of seasons
 
 ### Related work
