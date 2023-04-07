@@ -160,9 +160,11 @@ A notable trend is that fruity beers seem to be very well liked by the reviewers
 > - In case you are using a dataset that you have already explored in another context (ML or ADA course, semester project...), you are required to share the report of that work to outline the differences with the submission for this class.
 
 
-We have found on Kaggle [an analysis on what matters the most for beer reviewers](https://www.kaggle.com/code/stpeteishii/beer-information-visualize-importance#Visualize-Importance)
+We have found on Kaggle [an analysis on what matters the most for beer reviewers](https://www.kaggle.com/code/stpeteishii/beer-information-visualize-importance#Visualize-Importance). 
 
-Our approach differs in the fact that we intend to make more use of flavours related to each type of beer, not simply stating what works in general. Someone who likes sour beer might not be the person most interested by heavily malted beer.
+Our approach differs in the fact that we intend to make more use of flavours related to each type of beer, not simply stating what works in general. Someone who likes sour beer might not be the person most interested by heavily malted beer. We also use information about beer trends by country and season, and we intend to make use of the brewery information to see if there are any trends in the beer industry. The merging of all these datasets will allow us to make more interesting visualizations, and have a more specialized view by beer style. 
+
+Our inspiration comes from a common passion among our group, as members of Satellite we participated in multiple beer tastings and brewery presentations through the year. We believe that this analysis will not only help us broaden our understanding of the industry, but it will also help up take pertinent choices in the future of our association. 
 
 
 ## Milestone 2 (7th May, 5pm)
