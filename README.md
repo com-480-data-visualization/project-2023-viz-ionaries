@@ -3,8 +3,8 @@
 | Student's name | SCIPER |
 | -------------- | ------ |
 | Nicolas Termote | 301581|
-| Michel Morales| 283657 |
-| | |
+| Michel Morales | 283657 |
+| Edouard Dufour | 295754 |
 
 [Milestone 1](#milestone-1) • [Milestone 2](#milestone-2) • [Milestone 3](#milestone-3)
 
@@ -24,11 +24,11 @@ Please, fill the following sections about your project.
 > Hint: some good pointers for finding quality publicly available datasets ([Google dataset search](https://datasetsearch.research.google.com/), [Kaggle](https://www.kaggle.com/datasets), [OpenSwissData](https://opendata.swiss/en/), [SNAP](https://snap.stanford.edu/data/) and [FiveThirtyEight](https://data.fivethirtyeight.com/)), you could use also the DataSets proposed by the ENAC (see the Announcements section on Zulip).
 
 
-We decided to use two datasets from Kaggle in the topic of beer. These two datasets put together give us a lot of usefull information concerning the beer types, breweries, aromatic profiles and rating. These datasets are organized as follows :
+We decided to use two datasets from Kaggle in the topic of beer. These two datasets put together give us a lot of useful information concerning the beer types, breweries, aromatic profiles and rating. These datasets are organized as follows :
 
 #### 1- [Breweries, reviews : ](https://www.kaggle.com/datasets/ankurnapa/brewery-dataset?select=beers.csv)
 
-This dataset is made up of three files, the data seems to be well organized and clean, with consistency in each column (string format, etc.). Little to no pre-processing of the columns will be needed, apart from the creation of a 'meta-style' column, allowing us to group similar beer styles together.
+This dataset is made up of three files, the data seems to be well organized and clean, with consistency in each column (string format, etc.). Little to no pre-processing of the columns will be needed.
 
 The data is from 1996 to 2018, and contains 9'073'128 reviews of 358'873 beers from 50'347 breweries. The data is organized as follows :
 
@@ -40,18 +40,18 @@ The data is from 1996 to 2018, and contains 9'073'128 reviews of 358'873 beers f
     - country : country of origin
     - style : beer style
     - availability : seasonal availability of the beer
-    - abv : Alcohol by Volume, alcohol percentage in beer
+    - abv : Alcohol by Volume
     - notes : notes about the beer
-    - retired : Whether the beer is still available (False), or is out of the market (True) 
+    - retired : Whether the beer is still produced
 
 - breweries.csv (50'347 entries) :
     - id : brewery tag
     - name : brewery name
-    - city : brewery city of origin
-    - state : brewery state of origin
-    - country : brewery country of origin
+    - city : city of origin
+    - state : state of origin
+    - country : country of origin
     - notes : notes about the brewery
-    - types : type of establishment (Brewery, Bar, Shop, etc.)
+    - types : type of establishment (Brewery, Bar, etc.)
 
 - reviews.csv (9'073'128 entries) : 
     - beer_id : beer tag
@@ -75,12 +75,12 @@ A dataset of up to 50 top-rated beers across 112 styles, 5558 beers in total. Th
     - key : Unique key given to each beer
     - Style : Beer style
     - Style Key : Unique key given to each style
-    - Brewery : Beer's source, the brewery
-    - Description : Information on the beer if available
+    - Brewery : Beer's source brewery
+    - Description : Information on the beer
     - ABV : Alcohol by Volume
     - Ave Rating : Average rating of a beer
     - Min IBU : Minimum value for IBU (International Bitterness Unit), a measure for bitterness
-    - Max IBU : Maximum value for IBU (International Bitterness Unit), a measure for bitterness
+    - Max IBU : Maximum value for IBU
     - Astringency : Astringency tasting score
     - Body : Body tasting score
     - Alcohol : Alcoholic tasting score
@@ -93,7 +93,7 @@ A dataset of up to 50 top-rated beers across 112 styles, 5558 beers in total. Th
     - Spices : Spiciness tasting score
     - Malty : Maltiness tasting score
 
-The merging of the two datasets will be done by matching the beer names and brewery names. This will allow us to have a complete dataset with all the information we need.
+The merging of the two datasets will be done by matching the beer names, brewery names and alcohol level. This will allow us to have a single dataset with all the information we need. The final merged dataset contains 4135 beers and 1744151 reviews.
 
 ### Problematic
 
@@ -117,9 +117,8 @@ This analysis can be seen in the file : dataset_analysis.ipynb
 
 ### Preprocessing
 
-We started by preprocessing the data data. For example, the breweries had several labels like 'bar', 'to-go' or 'eatery' written in a list-like fashion. To make it easier to analyse we transformed this list into a one-hot encoding representation.
-
-We also merged the data with their respective breweries.
+We started by preprocessing the data. We merged the datasets by inner-joins, getting a single dataset with beer, brewery and aroma information. We one-hot encoded the brewery type. We also added the medians of the review-scores for the beers that had reviews.
+We kept only the reviews of the beers that are in the final dataset. Finally, we added what we called "meta-styles", which are broader categories than the given styles, so that we could extract interpretable visualizations. The preprocessing can be found in the "Preprocessing" notebook.
 
 ### Analysis
 
