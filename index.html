@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+	<meta charset="utf-8" />
+	<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+	<title>A Beer Analysis</title>
+	<meta name="description" content="Viz-ionaries: A Beer Analysis" />
+	<meta name="viewport" content="width=device-width, initial-scale=1" />
+	<script src="https://unpkg.com/scrollama"></script>
+	<script src="https://unpkg.com/d3@5.9.1/dist/d3.min.js"></script>
+	<link rel="stylesheet" href="style/scrolly.css" />
+
+<body>
+	<main>
+		<section id="scrolly">
+			<figure>
+				<p>0</p>
+			</figure>
+
+			<article>
+				<div class="step" data-step="0">
+					<p>
+						0. A word about the dataset.<br>
+						how many beers, what columns, etc
+					</p>
+				</div>
+				<div class="step" data-step="1">
+					<p>
+						1. An analysis of the different aromas.<br>
+						Display of the distributions for key aromas, as well as the distribution of the aromas of the best rated (4/5) beers
+					</p>
+				</div>
+				<div class="step" data-step="2">
+					<p>
+						2. What aromas impact the rating in which way. <br>
+						A graph showing the coefficients in case of a fully linear regression.
+					</p>
+				</div>
+				<div class="step" data-step="3">
+					<p>
+						3. Gravity balls. Show how aromatically close different beer styles are from each other.<br>
+						Sliders for key aromas will change the transparency of each ball to try to find the beer styles that correspond to one's taste.
+						<input name="i" type="range" min="0" max="200" value="0" step="1" style="width: 180px;">
+					</p>
+				</div>
+				<div class="step" data-step="4">
+					<p>
+						4. Map per style. Having chosen the style we want, we can now look for which country does the best beers of this style.
+						<form>
+  							<input type="radio" id="style1" name="beer style" value="style1">
+  							<label for="style1">style1</label><br>
+  							<input type="radio" id="style2" name="beer style" value="style2">
+  							<label for="style1">style2</label><br>
+  							<input type="radio" id="style3" name="beer style" value="style3">
+  							<label for="style1">style3</label><br>
+  							<input type="radio" id="style4" name="beer style" value="style4">
+  							<label for="style1">style4</label><br>
+  							<input type="radio" id="style5" name="beer style" value="style5">
+  							<label for="style1">style5</label><br>
+						</form>
+					</p>
+				</div>
+				<div class="step" data-step="5">
+					<p>
+						5. Seasonality. For a given style, how does the time of year affect the consumption and the attractiveness?
+						<form>
+  							<input type="radio" id="style1" name="beer style" value="style1">
+  							<label for="style1">style1</label><br>
+  							<input type="radio" id="style2" name="beer style" value="style2">
+  							<label for="style1">style2</label><br>
+  							<input type="radio" id="style3" name="beer style" value="style3">
+  							<label for="style1">style3</label><br>
+  							<input type="radio" id="style4" name="beer style" value="style4">
+  							<label for="style1">style4</label><br>
+  							<input type="radio" id="style5" name="beer style" value="style5">
+  							<label for="style1">style5</label><br>
+						</form>
+					</p>
+				</div>
+			</article>
+		</section>
+
+		<section id="outro"></section>
+	</main>
+	<script src="src/scrollama.js"></script>
+</body>
+
+</html>
