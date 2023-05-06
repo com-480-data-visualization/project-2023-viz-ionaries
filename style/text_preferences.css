@@ -1,0 +1,17 @@
+/* Create the style for the tile, and introduction text.*/
+
+main_title {
+    font-size: 2rem;
+    font-weight: 900;
+    color: #ff5757;
+    text-align: center;
+    padding: 1rem;
+}
+
+main_intro {
+    font-size: 1rem;
+    font-weight: 900;
+    color: #ffab2d;
+    text-align: center;
+    padding: 1rem;
+}

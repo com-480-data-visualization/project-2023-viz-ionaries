@@ -10,9 +10,23 @@
 	<script src="https://unpkg.com/scrollama"></script>
 	<script src="https://unpkg.com/d3@5.9.1/dist/d3.min.js"></script>
 	<link rel="stylesheet" href="style/scrolly.css" />
+	<link rel="stylesheet" href="style/text_preferences.css" />
 
 <body>
 	<main>
+
+
+		<!-- Create a section id = intro, the height of the page, with the title and a small description, align text to center -->
+		<section id="intro">
+			<main_title>A Beer Analysis
+				<br><br>
+			</main_title>
+			<main_intro>
+				This project aims to create a user-friendly structure that enables users to explore various aromatic and tasting profiles of different beer styles, as well as understand what makes a great beer within each style. Once the user has identified their preferred aromatic profile, our system will use regression to predict the quality of the beer that can be created to match their preference, and also suggest similar beer styles based on the aroma profile. Additionally, users will have access to information about where in the world the preferred beer style is commonly produced, as well as the best times of year to enjoy it.
+				Overall, our goal is to provide a comprehensive beer discovery experience that helps users better understand and appreciate the nuances of different beer styles while also empowering them to make informed decisions about their beer preferences.
+			</main_intro>
+		</section>
+
 		<section id="scrolly">
 			<figure>
 				<p>0</p>
@@ -84,6 +98,7 @@
 		<section id="outro"></section>
 	</main>
 	<script src="src/scrollama.js"></script>
+	<script src="src/source.js"></script>
 </body>
 
 </html>
