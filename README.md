@@ -171,6 +171,7 @@ Our inspiration comes from a common passion among our group, as members of Satel
 
 **10% of the final grade**
 
+This milestone can be found in the `Dataviz_Milestone 2.pdf` file.
 
 ## Milestone 3 (4th June, 5pm)
 
