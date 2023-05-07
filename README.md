@@ -6,6 +6,10 @@
 | Michel Morales | 283657 |
 | Edouard Dufour | 295754 |
 
+## Website
+
+[World Of Beer Website](https://com-480-data-visualization.github.io/project-2023-viz-ionaries/)
+
 [Milestone 1](#milestone-1) • [Milestone 2](#milestone-2) • [Milestone 3](#milestone-3)
 
 ## Milestone 1 (23rd April, 5pm)
