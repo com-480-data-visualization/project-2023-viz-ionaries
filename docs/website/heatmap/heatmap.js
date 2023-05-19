@@ -1,6 +1,6 @@
 
 // Define the width and height of each map
-const mapWidth = 500;
+const mapWidth = 434;
 const mapHeight = 450;
 
 // Create the first map
@@ -17,8 +17,8 @@ const map_eu = d3.select("#map_europe")
 
 // A projection tells D3 how to orient the GeoJSON features
 let usaProjection = d3.geoAlbersUsa()
-  .scale(650)
-  .translate([250, 200])
+  .scale(600)
+  .translate([217, 200])
 
 let europeProjection = d3.geoMercator()
   .center([ 13, 52 ])
@@ -68,3 +68,51 @@ d3.queue()
 function ready(error, topo) {
     i = 0;
 }
+
+
+// Create the watchers for the radial list
+
+// create the function called
+function style_change(new_style) {
+    // Change the text in the element with the id "style_choice"
+    document.getElementById("style_choice").innerHTML = new_style;
+    }
+
+document.getElementById("btn_alcohol_free").addEventListener("click", function() {
+    style_change("Alcohol Free");  });
+
+document.getElementById("btn_ale").addEventListener("click", function() {
+    style_change("Ale");  });
+
+document.getElementById("btn_Ambree").addEventListener("click", function() {
+    style_change("Ambree");  });
+
+document.getElementById("btn_belgian").addEventListener("click", function() {
+    style_change("Belgian");  });
+
+document.getElementById("btn_boozy").addEventListener("click", function() {
+    style_change("Boozy");  });
+
+document.getElementById("btn_ipa").addEventListener("click", function() {
+    style_change("IPA");  });
+
+document.getElementById("btn_lager").addEventListener("click", function() {
+    style_change("Lager");  });
+
+document.getElementById("btn_other").addEventListener("click", function() {
+    style_change("Other");  });
+
+document.getElementById("btn_sour").addEventListener("click", function() {
+    style_change("Sour");  });
+
+document.getElementById("btn_stout").addEventListener("click", function() {
+    style_change("Stout");  });
+
+document.getElementById("btn_wheat").addEventListener("click", function() {
+    style_change("Wheat Beer");  });
+
+document.getElementById("btn_winter").addEventListener("click", function() {
+    style_change("Winter Beer");  });
+
+
+

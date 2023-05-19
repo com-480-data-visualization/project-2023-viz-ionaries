@@ -1,20 +1,19 @@
 body {
     font-family: Alegreya Sans;
-    background: #feeded;
   }
-  .menu {
+  .radial_menu {
     position: relative;
     background: #ac8f33;
     width: 3em;
     height: 3em;
     border-radius: 5em;
     margin: auto;
-    margin-top: 5em;
-    margin-bottom: 5em;
+    margin-top: 6em;
+    margin-left: 5em;
     cursor: pointer;
     border: 1em solid #e9c244;
   }
-  .menu:after {
+  .radial_menu:after {
     content: "";
     position: absolute;
     top: 1em;
@@ -24,11 +23,11 @@ body {
     border-top: 0.6em double #fff;
     border-bottom: 0.2em solid #fff;
   }
-  .menu ul {
+  .radial_menu ul {
     list-style: none;
     padding: 0;
   }
-  .menu li {
+  .radial_menu li {
     width: 5.1em;
     height: 1.4em;
     padding: 0.2em;
@@ -46,15 +45,18 @@ body {
     font-weight: bold;
     
   }
-  .menu:hover li {
+  .radial_menu:hover li {
     opacity: 1;
+  }
+  .radial_menu:hover .StyleChoiceContainer {
+    opacity: 0;
   }
   /**
    * Add a pseudo element to cover the space
-   * between the links. This is so the menu
+   * between the links. This is so the radial_menu
    * does not lose :hover focus and disappear
    */
-  .menu:hover ul::before {
+  .radial_menu:hover ul::before {
     position: absolute;
     content: "";
     width: 0;
@@ -77,7 +79,7 @@ body {
     cursor: default;
     transform: translateX(-50%);
   }
-  .menu a {
+  .radial_menu a {
     color: white;
     text-decoration: none;
     /**
@@ -86,94 +88,122 @@ body {
      */
     line-height: 1.5em;
   }
-  .menu a {
+  .radial_menu a {
     color: white;
     text-decoration: none;
   }
-  .menu ul {
+  .radial_menu ul {
     transform: rotate(180deg) translateY(-2.2em) translateX(0.6em);
     transition: 1s all;
   }
-  .menu:hover ul {
+  .radial_menu:hover ul {
     transform: rotate(0deg) translateY(-1em)translateX(-0.1em);
   }
-  .menu li:hover {
+  .radial_menu li:hover {
     background: #c4a43a;
     z-index: 10;
   }
   
-  .menu li:nth-of-type(1) {
+  .radial_menu li:nth-of-type(1) {
     transform: rotate(0deg);
     position: absolute;
     left: -6.2em;
     top: 0.4em;
   }
-  .menu li:nth-of-type(2) {
+  .radial_menu li:nth-of-type(2) {
     transform: rotate(30deg);
     position: absolute;
     left: -5.5em;
     top: -2.1em;
   }
-  .menu li:nth-of-type(3) {
+  .radial_menu li:nth-of-type(3) {
     transform: rotate(60deg);
     position: absolute;
     left: -3.7em;
     top: -3.9em;
   }
-    .menu li:nth-of-type(4) {
+    .radial_menu li:nth-of-type(4) {
         transform: rotate(270deg);
         position: absolute;
         left: -1.2em;
         top: -4.6em;
     }
-    .menu li:nth-of-type(5) {
+    .radial_menu li:nth-of-type(5) {
         transform: rotate(300deg);
         position: absolute;
         left: 1.3em;
         top: -3.9em;
     }
-    .menu li:nth-of-type(6) {
+    .radial_menu li:nth-of-type(6) {
         transform: rotate(330deg);
         position: absolute;
         left: 3.1em;
         top: -2.1em;
     }
-    .menu li:nth-of-type(7) {
+    .radial_menu li:nth-of-type(7) {
         transform: rotate(360deg);
         position: absolute;
         left: 3.8em;
         top: 0.4em;
     }
-    .menu li:nth-of-type(8) {
+    .radial_menu li:nth-of-type(8) {
         transform: rotate(390deg);
         position: absolute;
         left: 3.1em;
         top: 2.9em;
     }
-    .menu li:nth-of-type(9) {
+    .radial_menu li:nth-of-type(9) {
         transform: rotate(420deg);
         position: absolute;
         left: 1.3em;
         top: 4.7em;
     }
-    .menu li:nth-of-type(10) {
+    .radial_menu li:nth-of-type(10) {
         transform: rotate(450deg);
         position: absolute;
         left: -1.2em;
         top: 5.4em;
         /* rotate text 180deg to make it readable */
     }
-    .menu li:nth-of-type(11) {
+    .radial_menu li:nth-of-type(11) {
         transform: rotate(-60deg);
         position: absolute;
         left: -3.7em;
         top: 4.7em;
     }
-    .menu li:nth-of-type(12) {
+    .radial_menu li:nth-of-type(12) {
         transform: rotate(-30deg);
         position: absolute;
         left: -5.5em;
         top: 2.9em;
+    }
+    .StyleChoiceContainer {
+      pointer-events: none;
+      display: flex;
+      width: 6em;
+      height: 1.2em;
+      padding: 0.2em;
+  
+      margin-left: 4em;
+      transform: translateY(-0.55em)translateX(-2.3em);
+  
+      border-top-right-radius: 0.5em;
+      border-bottom-right-radius: 0.5em;
+  
+      transition: all 1s;
+      background: #e9c244;
+      
+      opacity: 1;
+      z-index: -1;
+      /*make text bold and make font bigger*/
+      font-weight: bold;
+      font-size: 2em;
+      /*put text in white and in the center*/
+      color: white;
+      text-align: center;
+      justify-content: center;
+      align-items: center;
+  
     }
   .hint {
     text-align: center;
