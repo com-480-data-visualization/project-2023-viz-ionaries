@@ -1,0 +1,8 @@
+#mapContainer {
+    display: flex;
+  }
+  
+  #map_us,
+  #map_europe {
+    flex: 1;
+  }
