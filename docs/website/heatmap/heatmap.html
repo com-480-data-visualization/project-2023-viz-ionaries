@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<meta charset="utf-8">
+
+<!-- Load d3.js -->
+<script src="https://d3js.org/d3.v4.js"></script>
+<script src="https://d3js.org/d3-scale-chromatic.v1.min.js"></script>
+<script src="https://d3js.org/d3-geo-projection.v2.min.js"></script>
+<link href='https://fonts.googleapis.com/css?family=Alegreya+Sans:400,800' rel='stylesheet' type='text/css'>
+<link rel="stylesheet" href="radial_menu.css">
+
+<!-- Load the css files-->
+<link rel="stylesheet" href="heatmap.css">
+
+<!-- add the html for the radial menu -->
+
+<nav class="radial_menu">
+    <ul>
+      <li><a id="btn_alcohol_free">Alcohol Free</a></li>
+      <li><a id="btn_ale">Ale</a></li>
+      <li><a id="btn_Ambree">Ambree</a></li>
+      <li><a id="btn_belgian">Belgian</a></li>
+      <li><a id="btn_boozy">Boozy</a></li>
+      <li><a id="btn_ipa">IPA</a></li>
+      <li><a id="btn_lager">Lager</a></li>
+      <li><a id="btn_other">Other</a></li>
+      <li><a id="btn_sour">Sour</a></li>
+      <li><a id="btn_stout">Stout</a></li>
+      <li><a id="btn_wheat">Wheat Beer</a></li>
+      <li><a id="btn_winter">Winter Beer</a></li>
+    </ul>
+    <div id="style_choice" class="StyleChoiceContainer">Ale</div>
+</nav>
+
+<!-- Create an element where the map will take place -->
+<div id="mapContainer">
+    <div id="map_us"></div>
+    <div id="map_europe"></div>
+  </div>
+
+
+<script src="https://d3js.org/d3.v7.min.js"></script>
+<script src="https://unpkg.com/topojson@3.0.2/dist/topojson.js"></script>
+<script src="heatmap.js"></script>

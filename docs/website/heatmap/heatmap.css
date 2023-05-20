@@ -1,0 +1,12 @@
+#mapContainer {
+    display: flex;
+  }
+  
+  #map_us,
+  #map_europe {
+    flex: 1;
+  }
+  
+  #radial_menu {
+    flex: 1;
+  }
