@@ -3,9 +3,25 @@ let cache = new Map();
 
 // Define the color scale
 function setup_cache() {
+
   cache.set("beer_style", "Ale");
   cache.set("n", 5);
-  cache.set("labels", ["low", "l","","h", "high"]);
+  determine_ranges_and_labels([3.2, 4], [0,0.3]);
+
+  // set labels are rounded to 2 decimals versions of the ranges
+  let rating_step_list = cache.get('rating_step_list').map(d => d.toFixed(2));
+  let rel_prod_step_list = cache.get('rel_prod_step_list').map(d => d.toFixed(2));
+
+  // Append a '<' to the end of the rating labels
+  rating_step_list.push(5.00);
+  rel_prod_step_list.push(1.00);
+
+  cache.set("rating_labels", rating_step_list);
+  cache.set("rel_prod_labels", rel_prod_step_list);
+
+  // append to the labels the character ">" to indicate the range is open
+
+
   cache.set("colors", [
     ["#d3d3d3", "#b6cdcd", "#97c5c5", "#75bebe", "#52b6b6"],
     ["#cab6c5", "#aeb0bf", "#91aab9", "#70a4b2", "#4e9daa"],
@@ -48,8 +64,8 @@ legend = (svg) => {
       .attr('fill', ([i, j]) => cache.get('colors')[j][i]);
   
     rects.append('title')
-      .text(([i, j]) => `${"Val 1"}${cache.get('labels')[j] ? ` (${cache.get('labels')[j]})` : ''} 
-      ${"Val 2"}${cache.get('labels')[i] ? ` (${cache.get('labels')[i]})` : ''}`);
+      .text(([i, j]) => "Rating range: " + cache.get('rating_labels')[i]+ " - "+ cache.get('rating_labels')[i+1] + "\n"
+       + "Relative Production range: " + cache.get('rel_prod_labels')[j]+ " - "+ cache.get('rel_prod_labels')[j+1]);
   
     innerGroup.append('line')
       .attr('marker-end', `url(#${arrow})`)
@@ -72,14 +88,14 @@ legend = (svg) => {
       .attr('dy', '0.71em')
       .attr('transform', `rotate(90) translate(${n / 2 * k}, 6)`)
       .attr('text-anchor', 'middle')
-      .text("Val2");
+      .text("Production*");
   
     innerGroup.append('text')
       .attr('font-weight', 'bold')
       .attr('dy', '0.71em')
       .attr('transform', `translate(${n / 2 * k}, ${n * k + 6})`)
       .attr('text-anchor', 'middle')
-      .text("Val2");
+      .text("Rating");
   
     return legendGroup.node();
   };
@@ -172,72 +188,73 @@ async function load_files(file1, type1, file2, type2) {
 
 };
 
+// Function to determine the ranges and labels 
+function determine_ranges_and_labels(rating_range, rel_prod_range) {
+  // Calculate row_indx and col_indx where the min and max values are located
+  
+  let max_rating = rating_range[1];
+  let min_rating = rating_range[0];
+
+  let max_rel_prod = rel_prod_range[1];
+  let min_rel_prod = rel_prod_range[0];
+  
+  // create a list of size n with the steps for the rating
+  let rating_step_list = [];
+  let rel_prod_step_list = [];
+
+  for (let i = 0; i < cache.get('n'); i++) {
+      rating_step_list.push(min_rating + i * (max_rating - min_rating) / (cache.get('n') - 1));
+      rel_prod_step_list.push(min_rel_prod + i * (max_rel_prod - min_rel_prod) / (cache.get('n') - 1));
+  };
+
+  // Update cache
+  cache.set('rating_step_list', rating_step_list);
+  cache.set('rel_prod_step_list', rel_prod_step_list);
+};
+
 // Function to calculate the color
 function calculate_color(values) {
 
-    // If the value is undefined, return the first color
-    console.log(values);
-
+    // If the value is undefined, return the white color
     if (values === undefined) {
-        return cache.get('colors')[0];
+        return "red";
         };
   
         const rating = values['rating'];
         const production = values['count'];
         const relative_production = values['rel_count'];
-        
-        // Calculate row_indx and col_indx where the min and max values are located
-
-        let row_indx = 0;
-        let col_indx = 0;
-        
-        let max_rating = 5;
-        let min_rating = 3.5;
-
-        let max_rel_prod = 1;
-        let min_rel_prod = 0;
-        
-        // create a list of size n with the steps for the rating
-        let rating_step_list = [];
-        let rel_prod_step_list = [];
-
-        for (let i = 0; i < cache.get('n'); i++) {
-            rating_step_list.push(min_rating + i * (max_rating - min_rating) / (cache.get('n') - 1));
-            rel_prod_step_list.push(min_rel_prod + i * (max_rel_prod - min_rel_prod) / (cache.get('n') - 1));
-        };
 
         // find the min production among all beer styles
+        let row_indx = 0;
+        let col_indx = 0;
 
-        if (rating < min_rating) {
+        if (rating < cache.get('rating_step_list')[0]) {
             row_indx = 0;
-        } else if (rating > max_rating) {
+        } else if (rating > cache.get('rating_step_list')[cache.get('n')]) {
             row_indx = cache.get('n') - 1;
         } else {
           // find the row index
           for (let i = 0; i < cache.get('n') - 1; i++) {
-            if (rating >= rating_step_list[i] && rating < rating_step_list[i + 1]) {
+            if (rating >= cache.get('rating_step_list')[i] && rating < cache.get('rating_step_list')[i + 1]) {
               row_indx = i;
               break;
             };
           };
         }
-        if (relative_production < min_rel_prod) {
+        if (relative_production < cache.get('rel_prod_step_list')[0]) {
             col_indx = 0;
-        } else if (relative_production > max_rel_prod) {
+        } else if (relative_production > cache.get('rel_prod_step_list')[cache.get('n')]) {
             col_indx = cache.get('n') - 1;
         } else {
           // find the column index
           for (let i = 0; i < cache.get('n') - 1; i++) {
-            if (relative_production >= rel_prod_step_list[i] && relative_production < rel_prod_step_list[i + 1]) {
+            if (relative_production >= cache.get('rel_prod_step_list')[i] && relative_production < cache.get('rel_prod_step_list')[i + 1]) {
               col_indx = i;
               break;
             };
           };
         }
 
-        console.log(row_indx);
-        console.log(col_indx);
-        console.log(cache.get('colors')[row_indx][col_indx]);
         return cache.get('colors')[row_indx][col_indx];
 };
 
