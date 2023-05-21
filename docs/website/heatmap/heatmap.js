@@ -4,8 +4,8 @@ let cache = new Map();
 // Define the color scale
 function setup_cache() {
 
-  cache.set("beer_style", "Ale");
-  cache.set("n", 5);
+  cache.set("beer_style", "Lager");
+  cache.set("n", 4);
   determine_ranges_and_labels([3.2, 4], [0,0.3]);
 
   // set labels are rounded to 2 decimals versions of the ranges
