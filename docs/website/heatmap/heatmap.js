@@ -122,38 +122,39 @@ async function drawMap() {
     .attr("fill", "white") // Fill color for the feature
 };
 
-// Function to parse CSV data into a Map
-function parseCSV(d, type) {
-
-    // create an object for each row
-    let values = {
-        rating: d.mean_rating,
-        count: d.count_rating,
-        rel_count : d.relative_count
-    };
-
-    if (type == "state") {
-      let key = [d.state, d.meta_style];
-      // add the object to the map
-      return [key, values];
-    }
-    else {
-      let key = [d.country, d.meta_style];
-      // add the object to the map
-      return [key, values];
-    };
-
-  };
-
 // function to load the data
 function loadCSV(file, type) {
 
   const map = new Map();
 
-  d3.csv(file, data => {
-    map.set(parseCSV(data, type));
-  });
+  Promise.all([
+    d3.csv(file)
+  ]).then(function(files) {
+    const csvData = files[0];
+  
+    // Process the CSV data and populate the map
+    csvData.forEach(function(d) {
+
+      // create an object for each row
+      let key = '';
+      let values = {
+      rating: d.mean_rating,
+      count: d.count_rating,
+      rel_count : d.relative_count
+      };
+
+      if (type == "state") {
+        key = d.state + '_' + d.meta_style;
+      }
+      else {
+        key = d.country + '_' + d.meta_style;
+      };
+
+      map.set(key, values);
+    });});
+
   return map;
+
   };
 
 async function load_files(file1, type1, file2, type2) {
@@ -178,58 +179,83 @@ function calculate_color(values) {
     console.log(values);
 
     if (values === undefined) {
-        console.log("undefined");
         return cache.get('colors')[0];
         };
   
-        const rating = values[rating];
-        const production = values[count];
-        const relative_production = values[rel_count];
+        const rating = values['rating'];
+        const production = values['count'];
+        const relative_production = values['rel_count'];
         
         // Calculate row_indx and col_indx where the min and max values are located
+
         let row_indx = 0;
         let col_indx = 0;
         
         let max_rating = 5;
         let min_rating = 3.5;
 
+        let max_rel_prod = 1;
+        let min_rel_prod = 0;
+        
+        // create a list of size n with the steps for the rating
+        let rating_step_list = [];
+        let rel_prod_step_list = [];
+
+        for (let i = 0; i < cache.get('n'); i++) {
+            rating_step_list.push(min_rating + i * (max_rating - min_rating) / (cache.get('n') - 1));
+            rel_prod_step_list.push(min_rel_prod + i * (max_rel_prod - min_rel_prod) / (cache.get('n') - 1));
+        };
+
         // find the min production among all beer styles
 
         if (rating < min_rating) {
-            row_indx = min_rating;
+            row_indx = 0;
         } else if (rating > max_rating) {
-            row_indx = max_rating;
+            row_indx = cache.get('n') - 1;
         } else {
-            row_indx = Math.floor((rating - min_rating) / (max_rating - min_rating) * 4);
+          // find the row index
+          for (let i = 0; i < cache.get('n') - 1; i++) {
+            if (rating >= rating_step_list[i] && rating < rating_step_list[i + 1]) {
+              row_indx = i;
+              break;
+            };
+          };
+        }
+        if (relative_production < min_rel_prod) {
+            col_indx = 0;
+        } else if (relative_production > max_rel_prod) {
+            col_indx = cache.get('n') - 1;
+        } else {
+          // find the column index
+          for (let i = 0; i < cache.get('n') - 1; i++) {
+            if (relative_production >= rel_prod_step_list[i] && relative_production < rel_prod_step_list[i + 1]) {
+              col_indx = i;
+              break;
+            };
+          };
         }
 
+        console.log(row_indx);
+        console.log(col_indx);
+        console.log(cache.get('colors')[row_indx][col_indx]);
         return cache.get('colors')[row_indx][col_indx];
 };
 
 // create a function to color all countries of map_eu and map_us depending on the current beer_style
 function color_maps() {
-    // remove color from all countries, add a 0.3 sec fade
-    console.log("coloring maps");
-    console.log(cache.get('beer_style'));
-    console.log(map_us);
-    console.log(map_eu);
     
     map_us.selectAll("path")
         .transition()
         .duration(1000)
         .attr("fill", function (d) {
-          console.log(d);
-          console.log(d.properties.name);
-          console.log(cache.get("us_beer_data").get([d.properties.name, cache.get('beer_style')]));
-
-            return calculate_color(cache.get("us_beer_data").get([d.properties.name, cache.get('beer_style')]));
+            return calculate_color(cache.get("us_beer_data").get(d.properties.name +'_'+ cache.get('beer_style')));
           });
 
     map_eu.selectAll("path")
         .transition()
         .duration(300)
         .attr("fill", function (d) {
-            return calculate_color(cache.get("country_beer_data").get([d.properties.name, cache.get('beer_style')]));
+            return calculate_color(cache.get("country_beer_data").get(d.properties.name +'_'+ cache.get('beer_style')));
           });
 };
 
