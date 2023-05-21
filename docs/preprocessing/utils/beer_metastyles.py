@@ -6,7 +6,7 @@ metastyle_beer_dict = dict([
     ['Ale']),
 
     ('Sour', 
-    ['Lambic', 'Sour', 'Kvass', 'Gueuze', 'Flanders', 'Gose', 'Sahti', 'Brett']),
+    ['Lambic', 'Sour', 'Kvass', 'Gueuze', 'Flanders', 'Gose', 'Sahti', 'Brett', 'Saison']),
 
     ('Lager', 
     ['Lager', 'Pilsner', 'Bock', 'Chile', 'Happoshu', 'Pilsener', 'Helles']),
