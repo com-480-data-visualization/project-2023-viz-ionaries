@@ -19,7 +19,21 @@ function setup_cache() {
   cache.set("rating_labels", rating_step_list);
   cache.set("rel_prod_labels", rel_prod_step_list);
 
-  // append to the labels the character ">" to indicate the range is open
+  // create the bivariate color map by interpolating blues and oranges
+  let colors = [];
+  for (let i = 0; i < cache.get('n'); i++) {
+    let row = [];
+    for (let j = 0; j < cache.get('n'); j++) {
+
+      blue = d3.interpolateGreens(i/cache.get('n'));
+      orange = d3.interpolatePurples(j/cache.get('n'));
+
+      // mix both colors with a 50% weight
+      row.push(d3.interpolate(blue, orange)(0.5));
+    }
+    colors.push(row);
+  }
+  cache.set("colors", colors);
 
 
   cache.set("colors", [
@@ -34,7 +48,49 @@ function setup_cache() {
 legend = (svg) => {
     const k = 15;
     const n = cache.get('n');
-    const arrow = 'arrow-' + Date.now(); // Generate a unique ID for the arrow marker
+
+    let legendMouseOver = function(d) {
+
+      let d_color = d3.select(this).attr("fill")
+      let selectedPaths = d3.selectAll("path").filter(function() {
+        return d3.select(this).attr("fill") === d_color; });
+
+      d3.selectAll("path")
+        .transition()
+        .duration(200)
+        .style("opacity", .4)
+
+      d3.selectAll("rect")
+        .transition()
+        .duration(200)
+        .style("opacity", .4)
+
+      d3.select(this)
+        .transition()
+        .duration(200)
+        .style("opacity", 1)
+
+      selectedPaths
+        .transition()
+        .duration(200)
+        .style("opacity", 1)
+    }
+
+    let legendMouseLeave = function(d) {
+      d3.select(this)
+        .transition()
+        .duration(200)
+        
+      d3.selectAll("path")
+        .transition()
+        .duration(200)
+        .style("opacity", 1)
+
+      d3.selectAll("rect")
+        .transition()
+        .duration(200)
+        .style("opacity", 1)
+    }
   
     const legendGroup = svg.append('g')
       .attr('font-family', 'sans-serif')
@@ -44,12 +100,15 @@ legend = (svg) => {
       .attr('transform', `translate(-${k * n / 2}, -${k * n / 2}) rotate(-45 ${k * n / 2},${k * n / 2})`);
   
     innerGroup.append('defs').append('marker')
-      .attr('id', arrow)
+      .attr('id', 'arrows')
       .attr('markerHeight', 10)
       .attr('markerWidth', 10)
       .attr('refX', 6)
       .attr('refY', 3)
       .attr('orient', 'auto')
+      .attr('stroke', 'black')
+      .attr('fill', 'white')
+      .attr('stroke-width', 1.5)
       .append('path')
       .attr('d', 'M0,0L9,3L0,6Z');
   
@@ -61,14 +120,18 @@ legend = (svg) => {
       .attr('height', k)
       .attr('x', ([i]) => i * k)
       .attr('y', ([, j]) => (n - 1 - j) * k)
-      .attr('fill', ([i, j]) => cache.get('colors')[j][i]);
+      .attr('fill', ([i, j]) => cache.get('colors')[j][i])
+    
+    rects.on("mouseover", legendMouseOver)
+      .on("mouseleave", legendMouseLeave);
   
     rects.append('title')
       .text(([i, j]) => "Rating range: " + cache.get('rating_labels')[i]+ " - "+ cache.get('rating_labels')[i+1] + "\n"
        + "Relative Production range: " + cache.get('rel_prod_labels')[j]+ " - "+ cache.get('rel_prod_labels')[j+1]);
-  
+
     innerGroup.append('line')
-      .attr('marker-end', `url(#${arrow})`)
+      .attr('id', 'lineID')
+      .attr('marker-end', `url(#${'arrows'})`)
       .attr('x1', 0)
       .attr('x2', n * k)
       .attr('y1', n * k)
@@ -77,7 +140,7 @@ legend = (svg) => {
       .attr('stroke-width', 1.5);
   
     innerGroup.append('line')
-      .attr('marker-end', `url(#${arrow})`)
+      .attr('marker-end', `url(#${'arrows'})`)
       .attr('y2', 0)
       .attr('y1', n * k)
       .attr('stroke', 'black')
@@ -136,6 +199,7 @@ async function drawMap() {
     .attr("d", d3.geoPath().projection(europeProjection))
     .attr("stroke", "grey") // Color of the lines
     .attr("fill", "white") // Fill color for the feature
+  
 };
 
 // function to load the data
@@ -190,7 +254,7 @@ async function load_files(file1, type1, file2, type2) {
 
 // Function to determine the ranges and labels 
 function determine_ranges_and_labels(rating_range, rel_prod_range) {
-  // Calculate row_indx and col_indx where the min and max values are located
+  // Calculate rating_idx and prod_idx where the min and max values are located
   
   let max_rating = rating_range[1];
   let min_rating = rating_range[0];
@@ -217,63 +281,155 @@ function calculate_color(values) {
 
     // If the value is undefined, return the white color
     if (values === undefined) {
-        return "red";
+        return "white";
         };
   
         const rating = values['rating'];
-        const production = values['count'];
         const relative_production = values['rel_count'];
 
         // find the min production among all beer styles
-        let row_indx = 0;
-        let col_indx = 0;
+        let rating_idx = 0;
+        let prod_idx = 0;
 
         if (rating < cache.get('rating_step_list')[0]) {
-            row_indx = 0;
-        } else if (rating > cache.get('rating_step_list')[cache.get('n')]) {
-            row_indx = cache.get('n') - 1;
+            rating_idx = 0;
+        } else if (rating > cache.get('rating_step_list')[cache.get('n') - 1]) {
+            rating_idx = cache.get('n') -1;
         } else {
           // find the row index
-          for (let i = 0; i < cache.get('n') - 1; i++) {
+          for (let i = 0; i < cache.get('n'); i++) {
             if (rating >= cache.get('rating_step_list')[i] && rating < cache.get('rating_step_list')[i + 1]) {
-              row_indx = i;
+              rating_idx = i;
               break;
             };
           };
         }
         if (relative_production < cache.get('rel_prod_step_list')[0]) {
-            col_indx = 0;
-        } else if (relative_production > cache.get('rel_prod_step_list')[cache.get('n')]) {
-            col_indx = cache.get('n') - 1;
+            prod_idx = 0;
+        } else if (relative_production > cache.get('rel_prod_step_list')[cache.get('n') - 1]) {
+          prod_idx = cache.get('n') - 1 ;
         } else {
           // find the column index
           for (let i = 0; i < cache.get('n') - 1; i++) {
             if (relative_production >= cache.get('rel_prod_step_list')[i] && relative_production < cache.get('rel_prod_step_list')[i + 1]) {
-              col_indx = i;
+              prod_idx = i;
               break;
             };
           };
         }
-
-        return cache.get('colors')[row_indx][col_indx];
+        
+        return cache.get('colors')[prod_idx][rating_idx];
 };
 
-// create a function to color all countries of map_eu and map_us depending on the current beer_style
-function color_maps() {
-    
-    map_us.selectAll("path")
-        .transition()
-        .duration(1000)
-        .attr("fill", function (d) {
-            return calculate_color(cache.get("us_beer_data").get(d.properties.name +'_'+ cache.get('beer_style')));
-          });
+function get_tooltip_label(d, type) {
+  if (type == "state") {
+    let val = cache.get("us_beer_data").get(d.properties.name +'_'+ cache.get('beer_style'));
+    if (val === undefined) {
+      return "No data available";
+    }
+    else {
+      // round values top 2 decimals
+      let rounded_rating = Math.round(val['rating'] * 100) / 100;
+      let rounded_rel_count = Math.round(val['rel_count'] * 100) / 100;
+      
+      return "Rating: " + rounded_rating + "\nRelative Production: " + rounded_rel_count;
+    }
+  } 
+  else {
+    let val = cache.get("country_beer_data").get(d.properties.name +'_'+ cache.get('beer_style'));
+    if (val === undefined) {
+      return "No data available";
+    }
+    else {
+      // round values top 2 decimals
+      let rounded_rating = Math.round(val['rating'] * 100) / 100;
+      let rounded_rel_count = Math.round(val['rel_count'] * 100) / 100;
+      return "Rating: " + rounded_rating + "\nRelative Production: " + rounded_rel_count;
+    }
+  };
+};
 
-    map_eu.selectAll("path")
+
+// create a function to color all countries of map_eu and map_us depending on the current beer_style
+let mouseOver = function(d) {
+  let d_color = d3.select(this).attr("fill")
+
+  let selectedPaths = d3.selectAll("rect").filter(function() {
+    return d3.select(this).attr("fill") === d_color; });
+
+  d3.selectAll("path")
+    .transition()
+    .duration(200)
+    .style("opacity", .4)
+  
+  d3.selectAll("rect")
+    .transition()
+    .duration(200)
+    .style("opacity", .4)
+
+  selectedPaths
+    .transition()
+    .duration(200)
+    .style("opacity", 1)
+
+  d3.select(this)
+    .transition()
+    .duration(200)
+    .style("opacity", 1)
+    .style("stroke", "black")
+}
+
+let mouseLeave = function(d) {
+
+  d3.selectAll("rect")
         .transition()
-        .duration(300)
-        .attr("fill", function (d) {
-            return calculate_color(cache.get("country_beer_data").get(d.properties.name +'_'+ cache.get('beer_style')));
-          });
+        .duration(200)
+        .style("opacity", 1)
+
+  d3.selectAll("path")
+    .transition()
+    .duration(200)
+    .style("opacity", 1)
+    .style("stroke", "gray")
+
+  d3.select(this)
+    .transition()
+    .duration(200)
+    .style("stroke", "gray")
+}
+
+function color_maps() {
+
+  map_us.selectAll("path")
+      .on("mouseover", mouseOver )
+      .on("mouseleave", mouseLeave )
+      .attr("fill", function (d) {
+        
+          return calculate_color(cache.get("us_beer_data").get(d.properties.name +'_'+ cache.get('beer_style')));
+        });
+  
+  map_eu.selectAll("path")
+      .on("mouseover", mouseOver )
+      .on("mouseleave", mouseLeave )
+      .attr("fill", function (d) {return calculate_color(cache.get("country_beer_data").get(d.properties.name +'_'+ cache.get('beer_style')));
+        });
+  // remove tooltip
+  map_eu.selectAll("path")
+  .select('title')
+    .remove();
+
+  map_us.selectAll("path")
+  .select('title')
+    .remove();
+
+  // add tooltip
+  map_eu.selectAll("path")
+  .append('title')
+    .text(d => d.properties.name + "\n" + get_tooltip_label(d, "country"));
+
+  map_us.selectAll("path")
+  .append('title')
+    .text(d => d.properties.name + "\n" + get_tooltip_label(d, "state"));
 };
 
 // Create the watchers for the radial list
@@ -281,12 +437,15 @@ function color_maps() {
 // create the function called
 function style_change(new_style) {
     // Change the text in the element with the id "style_choice", update cache['beer_style']
-    cache['beer_style'] = new_style;
+    cache.set('beer_style', new_style);
+
     document.getElementById("style_choice").innerHTML = new_style;
+    // update the color of the maps
+    color_maps();
     };
 
 document.getElementById("btn_alcohol_free").addEventListener("click", function() {
-    style_change("Alcohol Free");  });
+    style_change("Alcohol-free");  });
 
 document.getElementById("btn_ale").addEventListener("click", function() {
     style_change("Ale");  });
@@ -295,7 +454,7 @@ document.getElementById("btn_Ambree").addEventListener("click", function() {
     style_change("Ambree");  });
 
 document.getElementById("btn_belgian").addEventListener("click", function() {
-    style_change("Belgian");  });
+    style_change("Belgian Blonde");  });
 
 document.getElementById("btn_boozy").addEventListener("click", function() {
     style_change("Boozy");  });
@@ -345,7 +504,7 @@ function map_main() {
 
   // Append the legend
   map_eu.append(() => legend(map_eu))
-  .attr('transform', 'translate(56, 200)')
+  .attr('transform', 'translate(58, 200)')
   .attr('font-family', 'sans-serif')
   .attr('font-size', 10);
 
