@@ -1,25 +1,23 @@
-
-// Define the width and height of each map
-const mapWidth = 434;
-const mapHeight = 450;
-
-let beer_style = "Ale";
+// define the data as global cache
+let cache = new Map();
 
 // Define the color scale
-
-  const colors = [
+function setup_cache() {
+  cache.set("beer_style", "Ale");
+  cache.set("n", 5);
+  cache.set("labels", ["low", "l","","h", "high"]);
+  cache.set("colors", [
     ["#d3d3d3", "#b6cdcd", "#97c5c5", "#75bebe", "#52b6b6"],
     ["#cab6c5", "#aeb0bf", "#91aab9", "#70a4b2", "#4e9daa"],
     ["#c098b9", "#a593b3", "#898ead", "#6b89a6", "#4a839f"],
     ["#b77aab", "#9e76a6", "#8372a0", "#666e9a", "#476993"],
     ["#ad5b9c", "#955898", "#7c5592", "#60528d", "#434e87"]
-  ];
-
-const n = 5;
-const labels = ["low", "l","","h", "high"];
+  ]);
+}
 
 legend = (svg) => {
     const k = 15;
+    const n = cache.get('n');
     const arrow = 'arrow-' + Date.now(); // Generate a unique ID for the arrow marker
   
     const legendGroup = svg.append('g')
@@ -47,10 +45,11 @@ legend = (svg) => {
       .attr('height', k)
       .attr('x', ([i]) => i * k)
       .attr('y', ([, j]) => (n - 1 - j) * k)
-      .attr('fill', ([i, j]) => colors[j][i]);
+      .attr('fill', ([i, j]) => cache.get('colors')[j][i]);
   
     rects.append('title')
-      .text(([i, j]) => `${"Val 1"}${labels[j] ? ` (${labels[j]})` : ''} ${"Val 2"}${labels[i] ? ` (${labels[i]})` : ''}`);
+      .text(([i, j]) => `${"Val 1"}${cache.get('labels')[j] ? ` (${cache.get('labels')[j]})` : ''} 
+      ${"Val 2"}${cache.get('labels')[i] ? ` (${cache.get('labels')[i]})` : ''}`);
   
     innerGroup.append('line')
       .attr('marker-end', `url(#${arrow})`)
@@ -83,121 +82,116 @@ legend = (svg) => {
       .text("Val2");
   
     return legendGroup.node();
-  }
-
-// define the data
-let beer_data_us = new Map();
-let beer_data_eu = new Map();
-
-// Create the first map
-const map_us = d3.select("#map_us")
-  .append("svg")
-  .attr("width", mapWidth)
-  .attr("height", mapHeight);
-
-// Create the second map
-const map_eu = d3.select("#map_europe")
-.append("svg")
-.attr("width", mapWidth)
-.attr("height", mapHeight);
-
-// Append the legend
-map_eu.append(() => legend(map_eu))
-  .attr('transform', 'translate(56, 200)')
-  .attr('font-family', 'sans-serif')
-  .attr('font-size', 10);
+  };
 
 
-// A projection tells D3 how to orient the GeoJSON features
-let usaProjection = d3.geoAlbersUsa()
+// Create a function to draw the maps
+async function drawMap() {
+
+  // Request the GeoJSON for the US
+  let geojson_us = await d3.json("us_borders.json")
+
+  let usaProjection = d3.geoAlbersUsa()
   .scale(600)
   .translate([217, 200])
+  
+  // Render GeoJSON feature paths
+  map_us.selectAll("path")
+    .data(geojson_us.features)
+    .enter()
+    .append("path")
+    .attr("d", d3.geoPath().projection(usaProjection))
+    .attr("stroke", "grey") // Color of the lines 
+    .attr("fill", "white") // Fill color for the feature
 
-let europeProjection = d3.geoMercator()
+  // Request the GeoJSON for europe
+  let geojson_eu = await d3.json("europe_borders.json")
+
+  let europeProjection = d3.geoMercator()
   .center([ 13, 52 ])
   .scale([ mapWidth / 1.8 ])
   .translate([ mapWidth / 2  + mapWidth / 10, mapHeight / 2 ])
 
-// The path generator uses the projection to convert the GeoJSON
-// geometry to a set of coordinates that D3 can understand
+  // Tell D3 to render a path for each GeoJSON feature
+  map_eu.selectAll("path")
+    .data(geojson_eu.features)
+    .enter()
+    .append("path")
+    .attr("d", d3.geoPath().projection(europeProjection))
+    .attr("stroke", "grey") // Color of the lines
+    .attr("fill", "white") // Fill color for the feature
+};
 
-us_pathGenerator = d3.geoPath().projection(usaProjection)
-us_geoJsonUrl = "us_borders.json"
+// Function to parse CSV data into a Map
+function parseCSV(d, type) {
 
-eu_pathGenerator = d3.geoPath().projection(europeProjection)
-eu_geoJsonUrl = "europe_borders.json"
+    // create an object for each row
+    let values = {
+        rating: d.mean_rating,
+        count: d.count_rating,
+        rel_count : d.relative_count
+    };
 
-// Request the GeoJSON for the US
-d3.json(us_geoJsonUrl).then(geojson => {
-    
-    // Tell D3 to render a path for each GeoJSON feature
-    map_us.selectAll("path")
-      .data(geojson.features)
-      .enter()
-      .append("path")
-      .attr("d", us_pathGenerator) // This is where the magic happens
-      .attr("stroke", "grey") // Color of the lines themselves
-      .attr("fill", "white") // Color uses to fill in the 
-    
-  })
+    if (type == "state") {
+      let key = [d.state, d.meta_style];
+      // add the object to the map
+      return [key, values];
+    }
+    else {
+      let key = [d.country, d.meta_style];
+      // add the object to the map
+      return [key, values];
+    };
 
-// Request the GeoJSON for europe
-d3.json(eu_geoJsonUrl).then(geojson => {
+  };
 
-    // Tell D3 to render a path for each GeoJSON feature
-    map_eu.selectAll("path")
-      .data(geojson.features)
-      .enter()
-      .append("path")
-      .attr("d", eu_pathGenerator) // This is where the magic happens
-      .attr("stroke", "grey") // Color of the lines themselves
-      .attr("fill", "white") // Color uses to fill in the lines
-  })
+// function to load the data
+function loadCSV(file, type) {
 
+  const map = new Map();
 
-// Load external data and boot
-Promise.all([
-    d3.csv("test.csv")
-  ]).then(function(files) {
-    const csvData = files[0];
-  
-    // Process the CSV data and populate the map
-    csvData.forEach(function(d) {
-        // create an object for each row
-        let values = {
-            rate: d.rate,
-            rank: d.rank
-        };
-        // add the object to the map
-        beer_data_us.set(d.name, values);
-    });
-  
-    // Call the "ready" function with the populated map
-    ready(null, beer_data_us);
-  }).catch(function(error) {
-    // Handle any errors that occur during loading or processing
-    console.error(error);
+  d3.csv(file, data => {
+    map.set(parseCSV(data, type));
   });
+  return map;
+  };
+
+async function load_files(file1, type1, file2, type2) {
+  // Load the CSV files and store the results in two Maps
+
+  Promise.all([loadCSV(file1, type1), loadCSV(file2, type2)])
+  .then(([country_map, us_map]) => {
+    // Load the maps to cache
+    cache.set('country_beer_data', country_map);
+    cache.set('us_beer_data', us_map);
+  })
+  .catch((error) => {
+    console.error('Error:', error);
+  });
+
+};
 
 // Function to calculate the color
 function calculate_color(values) {
 
     // If the value is undefined, return the first color
+    console.log(values);
+
     if (values === undefined) {
-        return colors[0];
-        }
-    
-        
-        const rating = values[beer_style + "_rating"];
-        const production = values[beer_style + "_prod"];
-        const relative_production = values[beer_style + "_rel_prod"];
+        console.log("undefined");
+        return cache.get('colors')[0];
+        };
+  
+        const rating = values[rating];
+        const production = values[count];
+        const relative_production = values[rel_count];
         
         // Calculate row_indx and col_indx where the min and max values are located
         let row_indx = 0;
         let col_indx = 0;
         
-        max_rating = 5;
-        min_rating = 3.5;
+        let max_rating = 5;
+        let min_rating = 3.5;
 
         // find the min production among all beer styles
 
@@ -209,53 +203,44 @@ function calculate_color(values) {
             row_indx = Math.floor((rating - min_rating) / (max_rating - min_rating) * 4);
         }
 
-        return colors[row_indx][col_indx];
-}
+        return cache.get('colors')[row_indx][col_indx];
+};
 
 // create a function to color all countries of map_eu and map_us depending on the current beer_style
 function color_maps() {
     // remove color from all countries, add a 0.3 sec fade
+    console.log("coloring maps");
+    console.log(cache.get('beer_style'));
+    console.log(map_us);
+    console.log(map_eu);
+    
     map_us.selectAll("path")
         .transition()
-        .duration(300)
+        .duration(1000)
         .attr("fill", function (d) {
-            return calculate_color(beer_data_us.get(d.properties.name));
-          })
-            // Add a tooltip
-            .append("title")
-            .text(function (d) {
-                return d.properties.name + ": " + beer_data_us.get(d.properties.name);
-            }
-            );
+          console.log(d);
+          console.log(d.properties.name);
+          console.log(cache.get("us_beer_data").get([d.properties.name, cache.get('beer_style')]));
+
+            return calculate_color(cache.get("us_beer_data").get([d.properties.name, cache.get('beer_style')]));
+          });
 
     map_eu.selectAll("path")
         .transition()
         .duration(300)
         .attr("fill", function (d) {
-            return calculate_color(beer_data_eu.get(d.properties.name));
-          })
-            // Add a tooltip
-            .append("title")
-            .text(function (d) {
-                return d.properties.name + ": " + beer_data_eu.get(d.properties.name);
-            }
-            );
-}
-
-
-function ready(error) {
-    
-    color_maps();
-}
+            return calculate_color(cache.get("country_beer_data").get([d.properties.name, cache.get('beer_style')]));
+          });
+};
 
 // Create the watchers for the radial list
 
 // create the function called
 function style_change(new_style) {
-    // Change the text in the element with the id "style_choice"
-    beer_style = new_style;
+    // Change the text in the element with the id "style_choice", update cache['beer_style']
+    cache['beer_style'] = new_style;
     document.getElementById("style_choice").innerHTML = new_style;
-    }
+    };
 
 document.getElementById("btn_alcohol_free").addEventListener("click", function() {
     style_change("Alcohol Free");  });
@@ -293,5 +278,37 @@ document.getElementById("btn_wheat").addEventListener("click", function() {
 document.getElementById("btn_winter").addEventListener("click", function() {
     style_change("Winter Beer");  });
 
+//////////////////////////////////////////////////////////////////////////////////
 
+// Define the width and height of each map
+const mapWidth = 434;
+const mapHeight = 450;
 
+// Create the first map
+const map_us = d3.select("#map_us")
+.append("svg")
+.attr("width", mapWidth)
+.attr("height", mapHeight);
+
+// Create the second map
+const map_eu = d3.select("#map_europe")
+.append("svg")
+.attr("width", mapWidth)
+.attr("height", mapHeight);
+
+function map_main() {
+
+  setup_cache();
+
+  // Append the legend
+  map_eu.append(() => legend(map_eu))
+  .attr('transform', 'translate(56, 200)')
+  .attr('font-family', 'sans-serif')
+  .attr('font-size', 10);
+
+  Promise.all([drawMap(),load_files("country_beers.csv", "country", "us_beers.csv", "state")]).then(() => {
+    color_maps();
+  });  
+};
+
+map_main();
