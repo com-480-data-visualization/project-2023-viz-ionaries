@@ -25,14 +25,36 @@ main_intro {
 .hidden {
     opacity: 0;
     transition: opacity 0.5s;
+    /*Make text unselectable*/
+    -webkit-touch-callout: none; /* iOS Safari */
+    -webkit-user-select: none; /* Safari */
+    -khtml-user-select: none; /* Konqueror HTML */
+    -moz-user-select: none; /* Old versions of Firefox */
+    -ms-user-select: none; /* Internet Explorer/Edge */
+    user-select: none; /* Non-prefixed version, currently supported by Chrome, Edge, Opera and Firefox */
+
   }
 .hidden.show {
     transition: opacity 0.5s;
     opacity: 1;
+    /* Make text selectable again */
+    -webkit-touch-callout: default; /* iOS Safari */
+    -webkit-user-select: default; /* Safari */
+    -khtml-user-select: default; /* Konqueror HTML */
+    -moz-user-select: default; /* Old versions of Firefox */
+    -ms-user-select: default; /* Internet Explorer/Edge */
+    user-select: default; /* Non-prefixed version, currently supported by Chrome, Edge, Opera and Firefox */
     }
 .hidden:not(.show) {
     opacity: 0;
     transition: opacity 0.5s;
+    /*Make text unselectable*/
+    -webkit-touch-callout: none; /* iOS Safari */
+    -webkit-user-select: none; /* Safari */
+    -khtml-user-select: none; /* Konqueror HTML */
+    -moz-user-select: none; /* Old versions of Firefox */
+    -ms-user-select: none; /* Internet Explorer/Edge */
+    user-select: none; /* Non-prefixed version, currently supported by Chrome, Edge, Opera and Firefox */
     }
 
 #mapContainer {
