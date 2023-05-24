@@ -17,9 +17,23 @@
 	<script src="https://unpkg.com/d3@5.9.1/dist/d3.min.js"></script>
 	<link rel="stylesheet" type="text/css" href="website/style/scrolly.css" />
 	<link rel="stylesheet" type="text/css" href="website/style/text_preferences.css" />
-	<link rel="stylesheet" type="text/css" href="website/style/bootstrap.min.css">
 	<link rel="stylesheet" type="text/css" href="website/style/style.css">
 	
+	<!-- Load d3.js -->
+	<script src="https://d3js.org/d3.v4.js"></script>
+	<script src="https://d3js.org/d3-scale-chromatic.v1.min.js"></script>
+	<script src="https://d3js.org/d3-geo-projection.v2.min.js"></script>
+	
+	<!-- Load the css files-->
+	<link rel="stylesheet" href="website/heatmap/heatmap.css">
+	<link rel="stylesheet" href="website/heatmap/radial_menu.css">
+
+	<script src="https://d3js.org/d3.v7.min.js"></script>
+	<script src="https://unpkg.com/topojson@3.0.2/dist/topojson.js"></script>
+
+
+
+
 
 <body>
 	<main>
@@ -71,8 +85,48 @@
 		 </div>
 
 		<section id="scrolly">
-			<figure>
-				<p>0</p>
+
+			<figure id="embeddedContent">
+				<div id="hidden_div_0" class="hidden">
+					<p>0</p>
+				</div>
+				<div id="hidden_div_1" class="hidden">
+					<p>1</p>
+				</div>
+				<div id="hidden_div_2" class="hidden">
+					<p>2</p>
+				</div>
+				<div id="hidden_div_3" class="hidden">
+					<p>3</p>
+				</div>
+				<div id="hidden_div_4" class="hidden">
+				  <nav class="radial_menu">
+					  <ul>
+						<li><a id="btn_alcohol_free">Alcohol Free</a></li>
+						<li><a id="btn_ale">Ale</a></li>
+						<li><a id="btn_Ambree">Ambree</a></li>
+						<li><a id="btn_belgian">Belgian</a></li>
+						<li><a id="btn_boozy">Boozy</a></li>
+						<li><a id="btn_ipa">IPA</a></li>
+						<li><a id="btn_lager">Lager</a></li>
+						<li><a id="btn_other">Other</a></li>
+						<li><a id="btn_sour">Sour</a></li>
+						<li><a id="btn_stout">Stout</a></li>
+						<li><a id="btn_wheat">Wheat Beer</a></li>
+						<li><a id="btn_winter">Winter Beer</a></li>
+					  </ul>
+					  <div id="style_choice" class="StyleChoiceContainer">Lager</div>
+				  </nav>
+
+				  <div id="mapContainer">
+					<div id="map_us"></div>
+					<div id="map_europe"></div>
+				  </div>
+
+				</div>
+				<div id="hidden_div_5" class="hidden">
+					<p>5</p>
+				</div>
 			</figure>
 
 			<article>
@@ -142,7 +196,7 @@
 	</main>
 	<script src="website/src/scrollama.js"></script>
 	<script src="website/src/source.js"></script>
-	
+	<script src="website/heatmap/heatmap.js"></script>
 </body>
 
 </html>

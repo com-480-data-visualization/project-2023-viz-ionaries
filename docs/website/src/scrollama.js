@@ -14,7 +14,7 @@ function handleResize() {
 	var stepH = Math.floor(window.innerHeight * 0.75);
 	step.style("height", stepH + "px");
 
-	var figureHeight = window.innerHeight / 2;
+	var figureHeight = window.innerHeight / 1.05;
 	var figureMarginTop = (window.innerHeight - figureHeight) / 2;
 
 	figure
@@ -36,7 +36,7 @@ function handleStepEnter(response) {
 	});
 
 	// update graphic based on step
-	figure.select("p").text(response.index);
+	show_div(figure, 'hidden_div_'+ response.index);
 }
 
 function init() {
@@ -56,5 +56,17 @@ function init() {
 		.onStepEnter(handleStepEnter);
 }
 
+// Create a function to load one of the external html files depending on the input number
+function show_div(figure, divId) {
+
+	// find the ones that are shown
+	var shownDivs = figure.selectAll('.show');
+	// and hide them with a transition
+	shownDivs.classed('show', false);
+
+	console.log(divId);
+	var div = document.getElementById(divId);
+	div.classList.add('show');
+}
 // kick things off
 init();

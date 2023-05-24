@@ -21,3 +21,29 @@ main_intro {
 .row{display:-ms-flexbox;display:flex;-ms-flex-wrap:wrap;flex-wrap:wrap;margin-right:-15px;margin-left:-15px}
 
 .container{width:100%;padding-right:10%;padding-left:10%;margin-right:auto;margin-left:auto; align-items: center; justify-content: center;}
+
+.hidden {
+    opacity: 0;
+    transition: opacity 0.5s;
+  }
+.hidden.show {
+    transition: opacity 0.5s;
+    opacity: 1;
+    }
+.hidden:not(.show) {
+    opacity: 0;
+    transition: opacity 0.5s;
+    }
+
+#mapContainer {
+    display: flex;
+  }
+  
+  #map_us,
+  #map_europe {
+    flex: 1;
+  }
+  
+  #radial_menu {
+    flex: 1;
+  }

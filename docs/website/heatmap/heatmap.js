@@ -168,7 +168,7 @@ legend = (svg) => {
 async function drawMap() {
 
   // Request the GeoJSON for the US
-  let geojson_us = await d3.json("us_borders.json")
+  let geojson_us = await d3.json("website/heatmap/us_borders.json")
 
   let usaProjection = d3.geoAlbersUsa()
   .scale(600)
@@ -184,7 +184,7 @@ async function drawMap() {
     .attr("fill", "white") // Fill color for the feature
 
   // Request the GeoJSON for europe
-  let geojson_eu = await d3.json("europe_borders.json")
+  let geojson_eu = await d3.json("website/heatmap/europe_borders.json")
 
   let europeProjection = d3.geoMercator()
   .center([ 13, 52 ])
@@ -492,6 +492,9 @@ const map_us = d3.select("#map_us")
 .attr("width", mapWidth)
 .attr("height", mapHeight);
 
+// Print if map_us was found
+console.log(map_us);
+
 // Create the second map
 const map_eu = d3.select("#map_europe")
 .append("svg")
@@ -508,7 +511,7 @@ function map_main() {
   .attr('font-family', 'sans-serif')
   .attr('font-size', 10);
 
-  Promise.all([drawMap(),load_files("country_beers.csv", "country", "us_beers.csv", "state")]).then(() => {
+  Promise.all([drawMap(),load_files("website/heatmap/country_beers.csv", "country", "website/heatmap/us_beers.csv", "state")]).then(() => {
     color_maps();
   });  
 };

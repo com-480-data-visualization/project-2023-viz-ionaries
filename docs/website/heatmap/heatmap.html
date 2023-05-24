@@ -6,12 +6,22 @@
 <script src="https://d3js.org/d3-scale-chromatic.v1.min.js"></script>
 <script src="https://d3js.org/d3-geo-projection.v2.min.js"></script>
 <link href='https://fonts.googleapis.com/css?family=Alegreya+Sans:400,800' rel='stylesheet' type='text/css'>
-<link rel="stylesheet" href="radial_menu.css">
+<link rel="stylesheet" href="website/heatmap/radial_menu.css">
+
+<script src="https://d3js.org/d3.v7.min.js"></script>
+<script src="https://unpkg.com/topojson@3.0.2/dist/topojson.js"></script>
+<script src="website/heatmap/heatmap.js"></script>
 
 <!-- Load the css files-->
-<link rel="stylesheet" href="heatmap.css">
+<link rel="stylesheet" href="website/heatmap/heatmap.css">
 
 <!-- add the html for the radial menu -->
+
+<!-- Create an element where the map will take place -->
+<div id="mapContainer" class="mapContainer">
+  <div id="map_us"></div>
+  <div id="map_europe"></div>
+</div>
 
 <nav class="radial_menu">
     <ul>
@@ -30,14 +40,3 @@
     </ul>
     <div id="style_choice" class="StyleChoiceContainer">Lager</div>
 </nav>
-
-<!-- Create an element where the map will take place -->
-<div id="mapContainer">
-    <div id="map_us"></div>
-    <div id="map_europe"></div>
-  </div>
-
-
-<script src="https://d3js.org/d3.v7.min.js"></script>
-<script src="https://unpkg.com/topojson@3.0.2/dist/topojson.js"></script>
-<script src="heatmap.js"></script>

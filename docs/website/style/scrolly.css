@@ -24,7 +24,7 @@ figure {
 	-webkit-transform: translate3d(0, 0, 0);
 	-moz-transform: translate3d(0, 0, 0);
 	transform: translate3d(0, 0, 0);
-	background-color: #8a8a8a;
+	background-color: #ffffff;
 	z-index: 0;
 }
 figure p {
@@ -38,7 +38,7 @@ figure p {
 	transform: translate(-50%, -50%);
 	font-size: 8rem;
 	font-weight: 900;
-	color: #fff;
+	color: #000000;
 }
 .step {
 	margin: 0 auto 2rem auto;

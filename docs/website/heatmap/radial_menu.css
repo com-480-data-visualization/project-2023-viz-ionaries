@@ -4,32 +4,36 @@ body {
   .radial_menu {
     position: relative;
     background: #ac8f33;
-    width: 3em;
-    height: 3em;
-    border-radius: 5em;
+    width: 5em;
+    height: 5em;
+    border-radius: 7em;
     margin: auto;
-    margin-top: 6em;
-    margin-left: 5em;
+    margin-top: 7em;
+    margin-left: 8em;
     cursor: pointer;
     border: 1em solid #e9c244;
   }
   .radial_menu:after {
     content: "";
     position: absolute;
-    top: 1em;
-    left: 1em;
-    width: 1em;
-    height: 0.2em;
-    border-top: 0.6em double #fff;
-    border-bottom: 0.2em solid #fff;
+    top: 0.4em;
+    left: 0.6em;
+    width: 2em;
+    height: 2em;
+    background-image: url(../../website/images/beer_empty.png); /* Replace 'path/to/beer-icon.svg' with the actual path to your beer icon SVG */
+    background-repeat: no-repeat;
+    background-size: contain;
+    opacity: 0.8; /* Adjust the opacity if needed */
   }
   .radial_menu ul {
     list-style: none;
-    padding: 0;
+    margin-top: 0em;
+    margin-left: -2.35em;
+    padding: 0
   }
   .radial_menu li {
-    width: 5.1em;
-    height: 1.4em;
+    width: 8em;
+    height: 2em;
     padding: 0.2em;
     margin-top: 0.2em;
     text-align: center;
@@ -41,8 +45,8 @@ body {
     background: #e9c244;
     opacity: 0;
     z-index: -1;
-    /*make text bold*/
     font-weight: bold;
+    font-size: 1em;
     
   }
   .radial_menu:hover li {
@@ -62,8 +66,8 @@ body {
     width: 0;
     height: 0;
     display: block;
-    left: 50%;
-    top: -5.0em;
+    left: 70%;
+    top: -8em;
     /**
      * The pseudo-element is a semi-circle
      * created with CSS. Top, bottom, and right
@@ -71,10 +75,10 @@ body {
      * a border-radius is added to the two corners
      * on the right.
      */
-    border-width: 6.5em;
+    border-width: 9em;
     border-radius: 7.5em 7.5em 7.5em 7.5em;
     border-style: solid;
-    border-color: rgb(0, 0, 0, 0.01);
+    border-color: rgb(0, 0, 0, 0.001);
     z-index: -1;
     cursor: default;
     transform: translateX(-50%);
@@ -93,11 +97,12 @@ body {
     text-decoration: none;
   }
   .radial_menu ul {
-    transform: rotate(180deg) translateY(-2.2em) translateX(0.6em);
+    transform-origin: 4em 1em;
+    transform: rotate(180deg) translateY(-0.5em) translateX(0.5em);
     transition: 1s all;
   }
   .radial_menu:hover ul {
-    transform: rotate(0deg) translateY(-1em)translateX(-0.1em);
+    transform: rotate(0deg) translateY(0.3em)translateX(0em);
   }
   .radial_menu li:hover {
     background: #c4a43a;
@@ -107,85 +112,85 @@ body {
   .radial_menu li:nth-of-type(1) {
     transform: rotate(0deg);
     position: absolute;
-    left: -6.2em;
-    top: 0.4em;
+    left: -6em;
+    top: 0em;
   }
   .radial_menu li:nth-of-type(2) {
     transform: rotate(30deg);
     position: absolute;
-    left: -5.5em;
-    top: -2.1em;
+    left: -5.2em;
+    top: -3em;
   }
   .radial_menu li:nth-of-type(3) {
     transform: rotate(60deg);
     position: absolute;
-    left: -3.7em;
-    top: -3.9em;
+    left: -3em;
+    top: -5.2em;
   }
     .radial_menu li:nth-of-type(4) {
         transform: rotate(270deg);
         position: absolute;
-        left: -1.2em;
-        top: -4.6em;
+        left: 0em;
+        top: -6em;
     }
     .radial_menu li:nth-of-type(5) {
         transform: rotate(300deg);
         position: absolute;
-        left: 1.3em;
-        top: -3.9em;
+        left: 3em;
+        top: -5.2em;
     }
     .radial_menu li:nth-of-type(6) {
         transform: rotate(330deg);
         position: absolute;
-        left: 3.1em;
-        top: -2.1em;
+        left: 5.2em;
+        top: -3em;
     }
     .radial_menu li:nth-of-type(7) {
         transform: rotate(360deg);
         position: absolute;
-        left: 3.8em;
-        top: 0.4em;
+        left: 6em;
+        top: 0em;
     }
     .radial_menu li:nth-of-type(8) {
         transform: rotate(390deg);
         position: absolute;
-        left: 3.1em;
-        top: 2.9em;
+        left: 5.2em;
+        top: 3em;
     }
     .radial_menu li:nth-of-type(9) {
         transform: rotate(420deg);
         position: absolute;
-        left: 1.3em;
-        top: 4.7em;
+        left: 3em;
+        top: 5.2em;
     }
     .radial_menu li:nth-of-type(10) {
         transform: rotate(450deg);
         position: absolute;
-        left: -1.2em;
-        top: 5.4em;
+        left: 0em;
+        top: 6em;
         /* rotate text 180deg to make it readable */
     }
     .radial_menu li:nth-of-type(11) {
         transform: rotate(-60deg);
         position: absolute;
-        left: -3.7em;
-        top: 4.7em;
+        left: -3em;
+        top: 5.2em;
     }
     .radial_menu li:nth-of-type(12) {
         transform: rotate(-30deg);
         position: absolute;
-        left: -5.5em;
-        top: 2.9em;
+        left: -5.2em;
+        top: 3em;
     }
     .StyleChoiceContainer {
       pointer-events: none;
       display: flex;
       width: 7em;
-      height: 1.2em;
+      height: 1.8em;
       padding: 0.2em;
   
       margin-left: 4em;
-      transform: translateY(-0.55em)translateX(-2.3em);
+      transform: translateY(-0.18em)translateX(-2.5em);
   
       border-top-right-radius: 0.5em;
       border-bottom-right-radius: 0.5em;
