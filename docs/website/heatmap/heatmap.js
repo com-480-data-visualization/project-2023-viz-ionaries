@@ -2,11 +2,13 @@
 let cache = new Map();
 
 // Define the color scale
-function setup_cache() {
+function setup_cache(n) {
 
-  cache.set("beer_style", "Lager");
-  cache.set("n", 4);
-  determine_ranges_and_labels([3.2, 4], [0,0.3]);
+  // Get the text of document.getElementById("style_choice") and set it as beer style
+  cache.set("beer_style", document.getElementById("style_choice").innerHTML);
+  console.log("setup_cache: beer_style = " + document.getElementById("style_choice").innerHTML);
+  cache.set("n", n);
+  determine_ranges_and_labels([3, 3.9], [0,0.29]);
 
   // set labels are rounded to 2 decimals versions of the ranges
   let rating_step_list = cache.get('rating_step_list').map(d => d.toFixed(2));
@@ -18,31 +20,33 @@ function setup_cache() {
 
   cache.set("rating_labels", rating_step_list);
   cache.set("rel_prod_labels", rel_prod_step_list);
-
-  // create the bivariate color map by interpolating blues and oranges
-  let colors = [];
-  for (let i = 0; i < cache.get('n'); i++) {
-    let row = [];
-    for (let j = 0; j < cache.get('n'); j++) {
-
-      blue = d3.interpolateGreens(i/cache.get('n'));
-      orange = d3.interpolatePurples(j/cache.get('n'));
-
-      // mix both colors with a 50% weight
-      row.push(d3.interpolate(blue, orange)(0.5));
-    }
-    colors.push(row);
+  
+  if (cache.get('n') == 3) {
+    cache.set("colors", [
+      ["#d3d3d3", "#97c5c5", "#52b6b6"],
+      ["#c098b9", "#898ead", "#4e9daa"],
+      ["#ad5b9c", "#955898", "#434e87"]
+    ]);
+  
   }
-  cache.set("colors", colors);
+  else if (cache.get('n') == 4){
+    cache.set("colors", [
+      ["#d3d3d3", "#97c5c5", "#75bebe", "#52b6b6"],
+      ["#cab6c5", "#aeb0bf", "#70a4b2", "#4e9daa"],
+      ["#b77aab", "#9e76a6", "#666e9a", "#476993"],
+      ["#ad5b9c", "#955898", "#60528d", "#434e87"]
+    ]);
+  } else {
+    cache.set("colors", [
+      ["#d3d3d3", "#b6cdcd", "#97c5c5", "#75bebe", "#52b6b6"],
+      ["#cab6c5", "#aeb0bf", "#91aab9", "#70a4b2", "#4e9daa"],
+      ["#c098b9", "#a593b3", "#898ead", "#6b89a6", "#4a839f"],
+      ["#b77aab", "#9e76a6", "#8372a0", "#666e9a", "#476993"],
+      ["#ad5b9c", "#955898", "#7c5592", "#60528d", "#434e87"]
+    ]);
+  }
 
 
-  cache.set("colors", [
-    ["#d3d3d3", "#b6cdcd", "#97c5c5", "#75bebe", "#52b6b6"],
-    ["#cab6c5", "#aeb0bf", "#91aab9", "#70a4b2", "#4e9daa"],
-    ["#c098b9", "#a593b3", "#898ead", "#6b89a6", "#4a839f"],
-    ["#b77aab", "#9e76a6", "#8372a0", "#666e9a", "#476993"],
-    ["#ad5b9c", "#955898", "#7c5592", "#60528d", "#434e87"]
-  ]);
 }
 
 legend = (svg) => {
@@ -165,7 +169,7 @@ legend = (svg) => {
 
 
 // Create a function to draw the maps
-async function drawMap() {
+async function drawMap(map_us, map_eu) {
 
   // Request the GeoJSON for the US
   let geojson_us = await d3.json("website/heatmap/us_borders.json")
@@ -398,7 +402,7 @@ let mouseLeave = function(d) {
     .style("stroke", "gray")
 }
 
-function color_maps() {
+function color_maps(map_us, map_eu) {
 
   map_us.selectAll("path")
       .on("mouseover", mouseOver )
@@ -435,50 +439,14 @@ function color_maps() {
 // Create the watchers for the radial list
 
 // create the function called
-function style_change(new_style) {
+function style_change(new_style, map_us, map_eu) {
     // Change the text in the element with the id "style_choice", update cache['beer_style']
     cache.set('beer_style', new_style);
 
     document.getElementById("style_choice").innerHTML = new_style;
     // update the color of the maps
-    color_maps();
+    color_maps(map_us, map_eu);
     };
-
-document.getElementById("btn_alcohol_free").addEventListener("click", function() {
-    style_change("Alcohol-free");  });
-
-document.getElementById("btn_ale").addEventListener("click", function() {
-    style_change("Ale");  });
-
-document.getElementById("btn_Ambree").addEventListener("click", function() {
-    style_change("Ambree");  });
-
-document.getElementById("btn_belgian").addEventListener("click", function() {
-    style_change("Belgian Blonde");  });
-
-document.getElementById("btn_boozy").addEventListener("click", function() {
-    style_change("Boozy");  });
-
-document.getElementById("btn_ipa").addEventListener("click", function() {
-    style_change("IPA");  });
-
-document.getElementById("btn_lager").addEventListener("click", function() {
-    style_change("Lager");  });
-
-document.getElementById("btn_other").addEventListener("click", function() {
-    style_change("Other");  });
-
-document.getElementById("btn_sour").addEventListener("click", function() {
-    style_change("Sour");  });
-
-document.getElementById("btn_stout").addEventListener("click", function() {
-    style_change("Stout");  });
-
-document.getElementById("btn_wheat").addEventListener("click", function() {
-    style_change("Wheat Beer");  });
-
-document.getElementById("btn_winter").addEventListener("click", function() {
-    style_change("Winter Beer");  });
 
 //////////////////////////////////////////////////////////////////////////////////
 
@@ -486,24 +454,27 @@ document.getElementById("btn_winter").addEventListener("click", function() {
 const mapWidth = 434;
 const mapHeight = 450;
 
-// Create the first map
-const map_us = d3.select("#map_us")
-.append("svg")
-.attr("width", mapWidth)
-.attr("height", mapHeight);
+function map_main(n) {
+  // Clear everything from #map_us and #map_europe
+  d3.select("#map_us").selectAll("*").remove();
+  d3.select("#map_europe").selectAll("*").remove();
 
-// Print if map_us was found
-console.log(map_us);
+  // Create the first map
+  const map_us = d3.select("#map_us")
+  .append("svg")
+  .attr("width", mapWidth)
+  .attr("height", mapHeight);
 
-// Create the second map
-const map_eu = d3.select("#map_europe")
-.append("svg")
-.attr("width", mapWidth)
-.attr("height", mapHeight);
+  // Create the second map
+  const map_eu = d3.select("#map_europe")
+  .append("svg")
+  .attr("width", mapWidth)
+  .attr("height", mapHeight);
 
-function map_main() {
+  setup_cache(n);
 
-  setup_cache();
+  // Remove the legend if it exists
+  map_us.selectAll("g").remove();
 
   // Append the legend
   map_eu.append(() => legend(map_eu))
@@ -511,9 +482,44 @@ function map_main() {
   .attr('font-family', 'sans-serif')
   .attr('font-size', 10);
 
-  Promise.all([drawMap(),load_files("website/heatmap/country_beers.csv", "country", "website/heatmap/us_beers.csv", "state")]).then(() => {
-    color_maps();
+  Promise.all([drawMap(map_us, map_eu),load_files("website/heatmap/country_beers.csv", "country", "website/heatmap/us_beers.csv", "state")]).then(() => {
+    color_maps(map_us, map_eu);
   });  
+  document.getElementById("btn_alcohol_free").addEventListener("click", function() {
+    style_change("Alcohol-free",map_us, map_eu);  });
+
+  document.getElementById("btn_ale").addEventListener("click", function() {
+      style_change("Ale",map_us, map_eu);  });
+
+  document.getElementById("btn_Ambree").addEventListener("click", function() {
+      style_change("Ambree",map_us, map_eu);  });
+
+  document.getElementById("btn_belgian").addEventListener("click", function() {
+      style_change("Belgian Blonde",map_us, map_eu);  });
+
+  document.getElementById("btn_boozy").addEventListener("click", function() {
+      style_change("Boozy",map_us, map_eu);  });
+
+  document.getElementById("btn_ipa").addEventListener("click", function() {
+      style_change("IPA",map_us, map_eu);  });
+
+  document.getElementById("btn_lager").addEventListener("click", function() {
+      style_change("Lager",map_us, map_eu);  });
+
+  document.getElementById("btn_other").addEventListener("click", function() {
+      style_change("Other",map_us, map_eu);  });
+
+  document.getElementById("btn_sour").addEventListener("click", function() {
+      style_change("Sour",map_us, map_eu);  });
+
+  document.getElementById("btn_stout").addEventListener("click", function() {
+      style_change("Stout",map_us, map_eu);  });
+
+  document.getElementById("btn_wheat").addEventListener("click", function() {
+      style_change("Wheat Beer",map_us, map_eu);  });
+
+  document.getElementById("btn_winter").addEventListener("click", function() {
+      style_change("Winter Beer",map_us, map_eu);  });
 };
 
-map_main();
+map_main(3);
