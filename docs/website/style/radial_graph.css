@@ -1,0 +1,199 @@
+
+.time_graph2{
+    /* position at the centre of the div */
+    flex: 2;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+
+    background: #868686;
+    width: 5em;
+    height: 5em;
+    border-radius: 7em;
+    margin: auto;
+    cursor: pointer;
+    border: 1em solid #d1d1d1;
+  }
+  .time_graph2:after {
+    content: "";
+    position: absolute;
+    top: 0.4em;
+    left: 0.6em;
+    width: 2em;
+    height: 2em;
+    background-image: url(../../website/images/beer_empty.png); /* Replace 'path/to/beer-icon.svg' with the actual path to your beer icon SVG */
+    background-repeat: no-repeat;
+    background-size: contain;
+    opacity: 0.8; /* Adjust the opacity if needed */
+  }
+  /* create 12 dashes */
+  .month_dashes .circle_edge{
+    --d: 4deg; /* distance between dashes */
+    --n: 12;   /* number of dashes */
+    --b: 4px;  /* control the thickness of border */
+    
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    position: absolute;
+    width: 35em;
+    height: 35em;
+    display: inline-block;
+
+    border-radius: 50%;
+    background: linear-gradient(rgb(12, 0, 116), rgb(218, 167, 0));
+    -webkit-mask: radial-gradient(farthest-side, transparent calc(100% - var(--b)), #fff calc(100% - var(--b) + 1px)),
+      repeating-conic-gradient(#000 0 calc(360deg / var(--n) - var(--d)), transparent 0 calc(360deg / var(--n)));
+    -webkit-mask-composite: source-in;
+    mask: radial-gradient(farthest-side, transparent calc(100% - var(--b)), #fff calc(100% - var(--b) + 1px)),
+      repeating-conic-gradient(#000 0 calc(360deg / var(--n) - var(--d)), transparent 0 calc(360deg / var(--n)));
+    mask-composite: intersect;
+  }
+
+  .month_dashes ul {
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    transform-origin: center center;
+    position: absolute;
+    width: 35em;
+    height: 35em;
+    display: inline-block;
+    list-style: none;
+  }
+
+  /* Add the 12 months text to the dashes */
+  .month_dashes li {
+    --i: 0;
+    --pivot_text:0;
+  --r: 19em;
+  --d: calc(360deg / 12);
+  --p: var(--i);
+  --tmp: calc(var(--p) * var(--d) - 77deg);
+  --x: calc(var(--r) * cos(var(--tmp)));
+  --y: calc(var(--r) * sin(var(--tmp)));
+  --rot: calc(var(--tmp) + (var(--pivot_text) * 180deg));
+
+  position: absolute;
+  left: calc(50% + var(--x));
+  top: calc(50% + var(--y));
+
+  transform: translate(-50%, -50%) rotate(calc(-90deg + var(--rot)));
+  transform-origin: center center;
+  text-align: center;
+}   
+  
+  /* Add styling for the <a> tag within the list item */
+  .month_dashes a {
+    color: black;
+    text-decoration: none;
+    font: 1em/1 sans-serif;
+    font-size: 2em;
+    line-height: 1.5em;
+  }
+
+  /* keep the element square */
+  .month_dashes:before {
+    content:"";
+    padding-top:100%;
+  }
+
+  .radial_line {
+    --i:0;
+    --r: 15em;
+    --d: calc(360deg / 52);
+
+    transform: rotate(calc(var(--i) * var(--d) + 1.5deg));
+
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: var(--r);
+    height: 1px;
+    background-color: rgba(0, 0, 0, 0.26);
+    transform-origin: 0 0;
+  }
+
+  .white_circle {
+    
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 4em;
+    height: 4em;
+    transform: translate(-50%, -50%);
+    background-color: white;
+    border-radius: 50%;
+  }
+
+  .multi_style_label {
+
+    --i:0;
+
+    position: absolute;
+
+    pointer-events: none;
+    display: flex;
+    width: 15%;
+    height: 1.4em;
+    padding: 0em;
+
+    margin-left: 3%;
+    bottom: 10%;
+    transform: translate(calc(var(--i)*(105%)), 0%);
+
+    border-top-right-radius: 0.5em;
+    border-bottom-right-radius: 0.5em;
+    border-top-left-radius: 0.5em;
+    border-bottom-left-radius: 0.5em;
+
+    transition: all 1s;
+    background: #e9c244;
+    
+    opacity: 1;
+    z-index: -1;
+    /*make text bold and make font bigger*/
+    font-weight: bold;
+    font-size: 1.2em;
+    /*put text in white and in the center*/
+    color: white;
+    text-align: center;
+    justify-content: center;
+    align-items: center;
+  }
+  .warning_label {
+    position: absolute;
+    opacity: 0;
+
+    pointer-events: none;
+    display: flex;
+    width: 50%;
+    height: 10%;
+    padding: 0em;
+
+    /*move it to the center of the div*/
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+
+
+    border-top-right-radius: 0.5em;
+    border-bottom-right-radius: 0.5em;
+    border-top-left-radius: 0.5em;
+    border-bottom-left-radius: 0.5em;
+
+    transition: all 0.5s;
+    background: #f78c62;
+    
+    z-index: 10;
+    /*make text bold and make font bigger*/
+    font-weight: bold;
+    font-size: 2em;
+    /*put text in white and in the center*/
+    color: white;
+    text-align: center;
+    justify-content: center;
+    align-items: center;
+  }
+
