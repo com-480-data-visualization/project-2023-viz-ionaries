@@ -26,39 +26,30 @@ main_intro {
     opacity: 0;
     transition: opacity 0.5s;
     /*Make text unselectable*/
-    -webkit-touch-callout: none; /* iOS Safari */
-    -webkit-user-select: none; /* Safari */
-    -khtml-user-select: none; /* Konqueror HTML */
-    -moz-user-select: none; /* Old versions of Firefox */
-    -ms-user-select: none; /* Internet Explorer/Edge */
-    user-select: none; /* Non-prefixed version, currently supported by Chrome, Edge, Opera and Firefox */
+    pointer-events: none;
 
   }
 .hidden.show {
     transition: opacity 0.5s;
     opacity: 1;
     /* Make text selectable again */
-    -webkit-touch-callout: default; /* iOS Safari */
-    -webkit-user-select: default; /* Safari */
-    -khtml-user-select: default; /* Konqueror HTML */
-    -moz-user-select: default; /* Old versions of Firefox */
-    -ms-user-select: default; /* Internet Explorer/Edge */
-    user-select: default; /* Non-prefixed version, currently supported by Chrome, Edge, Opera and Firefox */
+    pointer-events: auto;
     }
 .hidden:not(.show) {
     opacity: 0;
     transition: opacity 0.5s;
     /*Make text unselectable*/
-    -webkit-touch-callout: none; /* iOS Safari */
-    -webkit-user-select: none; /* Safari */
-    -khtml-user-select: none; /* Konqueror HTML */
-    -moz-user-select: none; /* Old versions of Firefox */
-    -ms-user-select: none; /* Internet Explorer/Edge */
-    user-select: none; /* Non-prefixed version, currently supported by Chrome, Edge, Opera and Firefox */
+    pointer-events: none;
     }
 
-#mapContainer {
+#MapContainer {
     display: flex;
+    /*Make it the size of the parent cell*/
+  }
+
+  #RadialContainer {
+    display: flex;
+    /*Make it the size of the parent cell*/
   }
   
   #map_us,
@@ -68,4 +59,12 @@ main_intro {
   
   #radial_menu {
     flex: 1;
+  }
+  #radial_graph_style_chooser{
+    top:0;
+    left:0;
+    position: absolute;
+  }
+  #map_style_chooser{
+    position: relative;
   }

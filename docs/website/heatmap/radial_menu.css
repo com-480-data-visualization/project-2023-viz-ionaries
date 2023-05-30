@@ -92,10 +92,6 @@ body {
      */
     line-height: 1.5em;
   }
-  .radial_menu a {
-    color: white;
-    text-decoration: none;
-  }
   .radial_menu ul {
     transform-origin: 4em 1em;
     transform: rotate(180deg) translateY(-0.5em) translateX(0.5em);
