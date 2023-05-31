@@ -44,12 +44,10 @@ main_intro {
 
 #MapContainer {
     display: flex;
-    /*Make it the size of the parent cell*/
   }
 
   #RadialContainer {
     display: flex;
-    /*Make it the size of the parent cell*/
   }
   
   #map_us,

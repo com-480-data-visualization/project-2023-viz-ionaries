@@ -19,6 +19,7 @@
 	<link rel="stylesheet" type="text/css" href="website/style/text_preferences.css" />
 	<link rel="stylesheet" type="text/css" href="website/style/radial_graph.css" />
 	<link rel="stylesheet" type="text/css" href="website/style/style.css">
+	<link rel="stylesheet" type="text/css" href="website/regression/regression.css">
 	
 	<!-- Load d3.js -->
 	<script src="https://d3js.org/d3.v4.js"></script>
@@ -31,9 +32,6 @@
 
 	<script src="https://d3js.org/d3.v7.min.js"></script>
 	<script src="https://unpkg.com/topojson@3.0.2/dist/topojson.js"></script>
-
-
-
 
 
 <body>
@@ -93,7 +91,59 @@
 				</div>
 				<div id="hidden_div_1" class="hidden">
 					<div class="warning_label"></div>
-					<p>1</p>
+					<!-- Create 11 rows of 3 columns-->
+					<nav class="radial_menu"  id = "map_style_chooser">
+						<ul>
+						  <li><a id="btn1_alcohol_free">Alcohol Free</a></li>
+						  <li><a id="btn1_ale">Ale</a></li>
+						  <li><a id="btn1_Ambree">Ambree</a></li>
+						  <li><a id="btn1_belgian">Belgian</a></li>
+						  <li><a id="btn1_boozy">Boozy</a></li>
+						  <li><a id="btn1_ipa">IPA</a></li>
+						  <li><a id="btn1_lager">Lager</a></li>
+						  <li><a id="btn1_other">Other</a></li>
+						  <li><a id="btn1_sour">Sour</a></li>
+						  <li><a id="btn1_stout">Stout</a></li>
+						  <li><a id="btn1_wheat">Wheat Beer</a></li>
+						  <li><a id="btn1_winter">Winter Beer</a></li>
+						</ul>
+						<div id="regression_style_choice" class="StyleChoiceContainer">Lager</div>
+					</nav>
+					
+					<div class = "reg_box">
+						<div class = "aroma_names">
+							<!--Astringency, Body, Alcohol, Bitter,Sweet,Sour,Salty,Fruits,Hoppy,Spices,Malty,-->
+							<div id="reg_astrigency" class = "reg_row">Astringency</div>
+							<div id="reg_body" class = "reg_row">Body</div>
+							<div id="reg_alcohol" class = "reg_row">Alcohol</div>
+							<div id="reg_bitter" class = "reg_row">Bitter</div>
+							<div id="reg_sweet" class = "reg_row">Sweet</div>
+							<div id="reg_sour" class = "reg_row">Sour</div>
+							<div id="reg_salty" class = "reg_row">Salty</div>
+							<div id="reg_fruits" class = "reg_row">Fruits</div>
+							<div id="reg_hoppy" class = "reg_row">Hoppy</div>
+							<div id="reg_spices" class = "reg_row">Spices</div>
+							<div id="reg_malty" class = "reg_row">Malty</div>
+						</div>
+						<div class = "negative_regression">.</div>
+						<div class = "positive_regression">.</div>
+						
+					</div>
+
+						<div class = "scale_box" style = "flex:1">
+							<div class = "scale_tick" style = "left:0%">-0.08</div>
+							<div class = "scale_tick" style = "left:10%"> </div>
+							<div class = "scale_tick" style = "left:20%"> </div>
+							<div class = "scale_tick" style = "left:30%"> </div>
+							<div class = "scale_tick" style = "left:40%"> </div>
+							<div class = "scale_tick" style = "left:50%">0</div>
+							<div class = "scale_tick" style = "left:60%"> </div>
+							<div class = "scale_tick" style = "left:70%"> </div>
+							<div class = "scale_tick" style = "left:80%"> </div>
+							<div class = "scale_tick" style = "left:90%"> </div>
+							<div class = "scale_tick" style = "left:100%">0.08</div>
+						</div>
+					
 				</div>
 				<div id="hidden_div_2" class="hidden">
 					<div class="warning_label"></div>
@@ -104,7 +154,6 @@
 					<p>3</p>
 				</div>
 				<div id="hidden_div_4" class="hidden">
-					<div class="warning_label"></div>
 				  <nav class="radial_menu"  id = "map_style_chooser">
 					  <ul>
 						<li><a id="btn_alcohol_free">Alcohol Free</a></li>
@@ -231,6 +280,7 @@
 	<script src="website/src/source.js"></script>
 	<script src="website/heatmap/heatmap.js"></script>
 	<script src="website/violin/violin_plot.js"></script>
+	<script src="website/regression/regression.js"></script>
 </body>
 
 </html>
