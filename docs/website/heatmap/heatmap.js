@@ -6,7 +6,6 @@ function setup_cache(n) {
 
   // Get the text of document.getElementById("style_choice") and set it as beer style
   cache.set("beer_style", document.getElementById("style_choice").innerHTML);
-  console.log("setup_cache: beer_style = " + document.getElementById("style_choice").innerHTML);
   cache.set("n", n);
   determine_ranges_and_labels([3, 3.9], [0,0.29]);
 
@@ -442,7 +441,6 @@ function color_maps(map_us, map_eu) {
 function map_style_change(new_style, map_us, map_eu) {
     // Change the text in the element with the id "style_choice", update cache['beer_style']
     cache.set('beer_style', new_style);
-    console.log("map style : " + cache.get('beer_style'));
     
     document.getElementById("style_choice").innerHTML = new_style;
     // update the color of the maps

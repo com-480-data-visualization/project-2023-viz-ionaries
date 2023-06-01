@@ -76,7 +76,6 @@ function reg_style_change(new_style) {
     document.getElementById("regression_style_choice").innerHTML = new_style;
 
     regression_chache.set("current_style", new_style);
-    console.log("regression style : " + regression_chache.get('current_style'));
     update_regression_graph()
 };
 

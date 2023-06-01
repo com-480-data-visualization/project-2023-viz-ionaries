@@ -1,0 +1,26 @@
+source,target,value,colour
+Belgian Blonde,Winter Beer,1.0,red
+IPA,Wheat Beer,0.9419581883510529,orange
+Stout,Winter Beer,0.8212317051384741,aquamarine
+Wheat Beer,Belgian Blonde,0.600208544408097,purple
+IPA,Ambree,0.5708330857901929,pink
+Alcohol-free,Boozy,0.32260794105688073,purple
+Ale,Alcohol-free,0.264027439105913,purple
+Wheat Beer,Alcohol-free,0.19244194887257987,red
+Lager,Ambree,0.16242773322354026,olive
+Ambree,Boozy,0.15561920191743825,olive
+Ale,Winter Beer,0.11250728922912823,aquamarine
+Ale,IPA,0.10830939994099936,olive
+Ambree,Stout,0.10527884446591586,blue
+Belgian Blonde,Ale,0.07620135315376025,purple
+Winter Beer,Ambree,0.06882396660454204,aquamarine
+Wheat Beer,Ale,0.05994369741900132,purple
+Lager,Wheat Beer,0.05748400680933883,red
+Wheat Beer,Sour,0.042878569650679814,olive
+Boozy,Winter Beer,0.030811912945547637,aquamarine
+Lager,Boozy,0.028404762956563665,purple
+Boozy,Ale,0.018990331084739447,green
+Ale,Lager,0.014445040701471668,red
+Belgian Blonde,Boozy,0.014029122943880373,red
+Ambree,Ale,0.010731627912548823,pink
+Lager,Alcohol-free,0.0035665466293282747,purple

@@ -27,7 +27,6 @@ function handleResize() {
 
 // scrollama event handlers
 function handleStepEnter(response) {
-	console.log(response);
 	// response = { element, direction, index }
 
 	// add color to current step only
@@ -64,7 +63,6 @@ function show_div(figure, divId) {
 	// and hide them with a transition
 	shownDivs.classed('show', false);
 
-	console.log(divId);
 	var div = document.getElementById(divId);
 	div.classList.add('show');
 }
