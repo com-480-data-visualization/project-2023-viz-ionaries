@@ -3,7 +3,7 @@
 	display: -webkit-box;
 	display: -ms-flexbox;
 	display: flex;
-	background-color: #ffffff;
+	background-color: papayawhip;
 	padding: 1rem;
 }
 #scrolly>* {
@@ -25,7 +25,7 @@ figure {
 	-webkit-transform: translate3d(0, 0, 0);
 	-moz-transform: translate3d(0, 0, 0);
 	transform: translate3d(0, 0, 0);
-	background-color: #ffffff;
+	background-color: papayawhip;
 	z-index: 0;
 }
 figure p {
@@ -43,14 +43,18 @@ figure p {
 }
 .step {
 	margin: 0 auto 2rem auto;
-	background-color: #3b3b3b;
-	color: #fff;
+	background-color: papayawhip;
+	color: papayawhip;
+	justify-content: center;
+	align-items: center;
+	/*Add text to the centre of the cell*/
+	display: flex;
 }
 .step:last-child {
 	margin-bottom: 0;
 }
 .step.is-active {
-	background-color: goldenrod;
+	background-color: papayawhip;
 	color: #3b3b3b;
 }
 .step p {

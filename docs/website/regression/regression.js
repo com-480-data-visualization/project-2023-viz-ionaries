@@ -72,48 +72,49 @@ Promise.all([load_csv_files()]).then(() => {
   }); 
 
 // create the function called
-function style_change(new_style) {
+function reg_style_change(new_style) {
     document.getElementById("regression_style_choice").innerHTML = new_style;
 
     regression_chache.set("current_style", new_style);
+    console.log("regression style : " + regression_chache.get('current_style'));
     update_regression_graph()
 };
 
 
-document.getElementById("btn1_alcohol_free").addEventListener("click", function() {
-    style_change("Alcohol-free");  });
+document.getElementById("btn2_alcohol_free").addEventListener("click", function() {
+    reg_style_change("Alcohol-free");  });
 
-document.getElementById("btn1_ale").addEventListener("click", function() {
-    style_change("Ale" );  });
+document.getElementById("btn2_ale").addEventListener("click", function() {
+    reg_style_change("Ale" );  });
 
-document.getElementById("btn1_Ambree").addEventListener("click", function() {
-    style_change("Ambree" );  });
+document.getElementById("btn2_Ambree").addEventListener("click", function() {
+    reg_style_change("Ambree" );  });
 
-document.getElementById("btn1_belgian").addEventListener("click", function() {
-    style_change("Belgian Blonde" );  });
+document.getElementById("btn2_belgian").addEventListener("click", function() {
+    reg_style_change("Belgian Blonde" );  });
 
-document.getElementById("btn1_boozy").addEventListener("click", function() {
-    style_change("Boozy" );  });
+document.getElementById("btn2_boozy").addEventListener("click", function() {
+    reg_style_change("Boozy" );  });
 
-document.getElementById("btn1_ipa").addEventListener("click", function() {
-    style_change("IPA" );  });
+document.getElementById("btn2_ipa").addEventListener("click", function() {
+    reg_style_change("IPA" );  });
 
-document.getElementById("btn1_lager").addEventListener("click", function() {
-    style_change("Lager" );  });
+document.getElementById("btn2_lager").addEventListener("click", function() {
+    reg_style_change("Lager" );  });
 
-document.getElementById("btn1_other").addEventListener("click", function() {
-    style_change("Other" );  });
+document.getElementById("btn2_other").addEventListener("click", function() {
+    reg_style_change("Other" );  });
 
-document.getElementById("btn1_sour").addEventListener("click", function() {
-    style_change("Sour" );  });
+document.getElementById("btn2_sour").addEventListener("click", function() {
+    reg_style_change("Sour" );  });
 
-document.getElementById("btn1_stout").addEventListener("click", function() {
-    style_change("Stout" );  });
+document.getElementById("btn2_stout").addEventListener("click", function() {
+    reg_style_change("Stout" );  });
 
-document.getElementById("btn1_wheat").addEventListener("click", function() {
-    style_change("Wheat Beer" );  });
+document.getElementById("btn2_wheat").addEventListener("click", function() {
+    reg_style_change("Wheat Beer" );  });
 
-document.getElementById("btn1_winter").addEventListener("click", function() {
-    style_change("Winter Beer" );  });
+document.getElementById("btn2_winter").addEventListener("click", function() {
+    reg_style_change("Winter Beer" );  });
 
 load_csv_files();
