@@ -15,7 +15,6 @@ function update_regression_graph() {
     // Iterate over the regression_coeffs map
     let i = 0;
     regression_coeffs.forEach(function(value, key) {
-        console.log("key : " + key + " value : " + value + " display : " + 100*value/0.08 + "%");
 
         if (value > 0) {
             // Add a rectagle that goes from 0 to value, 0 being the left side of the .positive_regression div
@@ -69,14 +68,11 @@ async function load_csv_files() {
 }
 
 Promise.all([load_csv_files()]).then(() => {
-    console.log("Finished loading all csv files");
-    console.log(regression_chache);
     update_regression_graph();
   }); 
 
 // create the function called
 function style_change(new_style) {
-    console.log("style_change called : " + new_style);
     document.getElementById("regression_style_choice").innerHTML = new_style;
 
     regression_chache.set("current_style", new_style);
