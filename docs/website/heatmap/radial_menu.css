@@ -1,9 +1,6 @@
-body {
-    font-family: Alegreya Sans;
-  }
   .radial_menu {
     position: relative;
-    background: #ac8f33;
+    background: darkgoldenrod;
     width: 5em;
     height: 5em;
     border-radius: 7em;
@@ -11,7 +8,7 @@ body {
     margin-top: 7em;
     margin-left: 8em;
     cursor: pointer;
-    border: 1em solid #e9c244;
+    border: 1em solid goldenrod;
   }
   .radial_menu:after {
     content: "";
@@ -42,7 +39,7 @@ body {
     border-bottom-left-radius: 0.5em;
     border-bottom-right-radius: 0.5em;
     transition: all 1s;
-    background: #e9c244;
+    background: goldenrod;
     opacity: 0;
     z-index: -1;
     font-weight: bold;
@@ -101,7 +98,7 @@ body {
     transform: rotate(0deg) translateY(0.3em)translateX(0em);
   }
   .radial_menu li:hover {
-    background: #c4a43a;
+    background: goldenrod;
     z-index: 10;
   }
   
@@ -192,7 +189,7 @@ body {
       border-bottom-right-radius: 0.5em;
   
       transition: all 1s;
-      background: #e9c244;
+      background: goldenrod;
       
       opacity: 1;
       z-index: -1;

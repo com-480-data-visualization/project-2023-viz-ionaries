@@ -1,22 +1,9 @@
-/* Create the style for the tile, and introduction text.*/
-
-main_title {
-    font-size: 2rem;
-    font-weight: 900;
-    color: #ff5757;
-    text-align: center;
-    padding: 1rem;
+body {
+  font-family: Alegreya Sans;
+  background-color: papayawhip;
 }
 
-main_intro {
-    font-size: 1rem;
-    font-weight: 900;
-    color: #ffab2d;
-    text-align: center;
-    padding: 1rem;
-}
-
-.col-md-6{-ms-flex:0 0 50%; flex:0 0 50%; max-width:50%; margin: 0 auto; align-items: center; justify-content: center; padding: 1%;}
+.col{-ms-flex:0 0 50%; flex:0 0 50%; max-width:50%; margin: 0 auto; align-items: center; justify-content: center; padding: 1%;}
 
 .row{display:-ms-flexbox;display:flex;-ms-flex-wrap:wrap;flex-wrap:wrap;margin-right:-15px;margin-left:-15px}
 
@@ -27,7 +14,15 @@ main_intro {
     transition: opacity 0.5s;
     /*Make text unselectable*/
     pointer-events: none;
+    /*Make it the size of the parent*/
+    width: 100%;
+    height: 100%;
 
+    /*Make it cover everything else*/
+    position: absolute;
+    top: 0;
+    left: 0;
+    z-index: 0;
   }
 .hidden.show {
     transition: opacity 0.5s;
@@ -44,12 +39,10 @@ main_intro {
 
 #MapContainer {
     display: flex;
-    /*Make it the size of the parent cell*/
   }
 
   #RadialContainer {
     display: flex;
-    /*Make it the size of the parent cell*/
   }
   
   #map_us,
@@ -67,4 +60,20 @@ main_intro {
   }
   #map_style_chooser{
     position: relative;
+    z-index: 1;
+  }
+  #regression_style_chooser{
+    position: relative;
+    z-index: 1;
+  }
+
+  .image-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+  
+  .image-container img {
+    width: 20%;
+    height: 20%;
   }

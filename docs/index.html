@@ -19,6 +19,8 @@
 	<link rel="stylesheet" type="text/css" href="website/style/text_preferences.css" />
 	<link rel="stylesheet" type="text/css" href="website/style/radial_graph.css" />
 	<link rel="stylesheet" type="text/css" href="website/style/style.css">
+	<link rel="stylesheet" type="text/css" href="website/regression/regression.css">
+	<link rel="stylesheet" type="text/css" href="website/chord/chord.css">
 	
 	<!-- Load d3.js -->
 	<script src="https://d3js.org/d3.v4.js"></script>
@@ -33,41 +35,25 @@
 	<script src="https://unpkg.com/topojson@3.0.2/dist/topojson.js"></script>
 
 
-
-
-
 <body>
 	<main>
 
-
-		<!-- Create a section id = intro, the height of the page, with the title and a small description, align text to center -->
+		<!--header section start -->
 		<div class="header_section">
-			<!--banner section start -->
 			<div class="banner_section layout_padding">
-				<div class="container-fluid">
-				   <div id="carouselExampleIndicators" class="carousel slide" data-ride="carousel">
-					  <div class="carousel-inner">
-						 <div class="carousel-item active">
-							<div class="container">
-							   <h4 class="banner_taital">Welcome to</h4>
-							   <h1 class="banner_taital_1">T H E &nbsp;&nbsp; W O R L D &nbsp;&nbsp; O F &nbsp;&nbsp; B E E R</h1>
-							   <p class="banner_text">Beer is a diverse world, with thousands of different types brewed globally. Aroma is a crucial aspect of beer's flavor experience, with notes such as fruity, floral, spicy, herbal, and earthy derived from ingredients like hops, malt, and yeast. 
-								<br><br>As such, The complexity and diversity of aromas found in beer make it a fascinating and enjoyable beverage to explore.
-								<div class="book_bt"><a href="https://alkypal.com.au/beer/beer-flavour-profiles.html">Learn More</a></div>
-							</div>
-						 </div>
-					  </div>
-				   </div>
-				</div>
+				<h4 class="banner_taital">Welcome to</h4>
+				<h1 class="banner_taital_1">T H E &nbsp;&nbsp; W O R L D &nbsp;&nbsp; O F &nbsp;&nbsp; B E E R</h1>
+				<p class="banner_text">Beer is a diverse world, with thousands of different types brewed globally. Aroma is a crucial aspect of beer's flavor experience, with notes such as fruity, floral, spicy, herbal, and earthy derived from ingredients like hops, malt, and yeast. 
+				<br><br>As such, The complexity and diversity of aromas found in beer make it a fascinating and enjoyable beverage to explore.
+				<div class="book_bt"><a href="https://alkypal.com.au/beer/beer-flavour-profiles.html">Learn More</a></div>
 			 </div>
-			 <!--banner section end -->
 		  </div>
 		  <!--header section end -->
+
 		  <!-- about section start -->
-		  <div class="about_section layout_padding">
-			 <div class="container">
+			 <div class="container layout_padding" style="width: 100%; float: left; background-color: papayawhip;">
 				<div class="row">
-				   <div class="col-md-6">
+				   <div class="col">
 					  <h1 class="about_taital"><img src="website/images/beer_full.png" style="
 						width:auto;
 						height:3rem;"> <span>About our Project</span></h1>
@@ -75,52 +61,130 @@
 
 						<!--  <div class="read_bt"><a href="#">Read More</a></div> -->
 				   </div>
-				   <div class="col-md-6">
+				   <div class="col">
 					  <div><img src="website/images/img-1.jpg" class="image_1"></div>
 				   </div>
 				</div>
 			 </div>
-		  </div>
 		  <!-- about section end -->
-		 </div>
+		</div>
 
 		<section id="scrolly">
 
+
 			<figure id="embeddedContent">
 				<div id="hidden_div_0" class="hidden">
-					<div class="warning_label"></div>
-					<p>0</p>
+					<p>Tableau variables</p>
 				</div>
 				<div id="hidden_div_1" class="hidden">
 					<div id="violin_plot" style="flex:1; position:absolute; top:50%; left:50%; transform: translate(-50%, -50%)">
 						<svg id="plot2"></svg>
 					</div>
 					<div class="warning_label"></div>
+					<p>Vilolin Plot</p>
+					
 				</div>
 				<div id="hidden_div_2" class="hidden">
+					
 					<div class="warning_label"></div>
-					<p>2</p>
+					<!-- Create 11 rows of 3 columns-->
+					<nav class="radial_menu"  id = "regression_style_chooser">
+						<ul>
+						  <li><a id="btn2_alcohol_free">Alcohol Free</a></li>
+						  <li><a id="btn2_ale">Ale</a></li>
+						  <li><a id="btn2_Ambree">Ambree</a></li>
+						  <li><a id="btn2_belgian">Belgian</a></li>
+						  <li><a id="btn2_boozy">Boozy</a></li>
+						  <li><a id="btn2_ipa">IPA</a></li>
+						  <li><a id="btn2_lager">Lager</a></li>
+						  <li><a id="btn2_other">Other</a></li>
+						  <li><a id="btn2_sour">Sour</a></li>
+						  <li><a id="btn2_stout">Stout</a></li>
+						  <li><a id="btn2_wheat">Wheat Beer</a></li>
+						  <li><a id="btn2_winter">Winter Beer</a></li>
+						</ul>
+						<div id="regression_style_choice" class="StyleChoiceContainer">Lager</div>
+					</nav>
+					
+					<div class = "reg_box">
+						<div class = "aroma_names">
+							<!--Astringency, Body, Alcohol, Bitter,Sweet,Sour,Salty,Fruits,Hoppy,Spices,Malty,-->
+							<div id="reg_astrigency" class = "reg_row">Astringency</div>
+							<div id="reg_body" class = "reg_row">Body</div>
+							<div id="reg_alcohol" class = "reg_row">Alcohol</div>
+							<div id="reg_bitter" class = "reg_row">Bitter</div>
+							<div id="reg_sweet" class = "reg_row">Sweet</div>
+							<div id="reg_sour" class = "reg_row">Sour</div>
+							<div id="reg_salty" class = "reg_row">Salty</div>
+							<div id="reg_fruits" class = "reg_row">Fruits</div>
+							<div id="reg_hoppy" class = "reg_row">Hoppy</div>
+							<div id="reg_spices" class = "reg_row">Spices</div>
+							<div id="reg_malty" class = "reg_row">Malty</div>
+						</div>
+						<div class = "negative_regression">.</div>
+						<div class = "positive_regression">.</div>
+						
+					</div>
+
+						<div class = "scale_box" style = "flex:1">
+							<div class = "scale_tick" style = "left:0%">-0.08</div>
+							<div class = "scale_tick" style = "left:10%"> </div>
+							<div class = "scale_tick" style = "left:20%"> </div>
+							<div class = "scale_tick" style = "left:30%"> </div>
+							<div class = "scale_tick" style = "left:40%"> </div>
+							<div class = "scale_tick" style = "left:50%">0</div>
+							<div class = "scale_tick" style = "left:60%"> </div>
+							<div class = "scale_tick" style = "left:70%"> </div>
+							<div class = "scale_tick" style = "left:80%"> </div>
+							<div class = "scale_tick" style = "left:90%"> </div>
+							<div class = "scale_tick" style = "left:100%">0.08</div>
+						</div>
 				</div>
+
 				<div id="hidden_div_3" class="hidden">
-					<div class="warning_label"></div>
-					<p>3</p>
+					<div class="chord_diagram"></div>
+					<div class="chord_diagram_legend" style="display: flex;">
+						<div class="color_square" style="align-self:center; background-color: black; width:1em; height:1em;"></div>
+						<div style="flex: 1">Astringency</div>
+						<div class="color_square" style="align-self:center;background-color: blue; width:1em; height:1em;"></div>
+						<div style="flex: 1">Body</div>
+						<div class="color_square" style="align-self:center;background-color: green; width:1em; height:1em;"></div>
+						<div style="flex: 1">Alcohol</div>
+						<div class="color_square" style="align-self:center;background-color: orange; width:1em; height:1em;"></div>
+						<div style="flex: 1">Bitter</div>
+						<div class="color_square" style="align-self:center;background-color: purple; width:1em; height:1em;"></div>
+						<div style="flex: 1">Sweet</div>
+						<div class="color_square" style="align-self:center;background-color: yellow; width:1em; height:1em;"></div>
+						<div style="flex: 1">Sour</div>
+						<div class="color_square" style="align-self:center;background-color: white; width:1em; height:1em;"></div>
+						<div style="flex: 1">Salty</div>
+						<div class="color_square" style="align-self:center;background-color: red; width:1em; height:1em;"></div>
+						<div style="flex: 1">Fruits</div>
+						<div class="color_square" style="align-self:center;background-color: olive; width:1em; height:1em;"></div>
+						<div style="flex: 1">Hoppy</div>
+						<div class="color_square" style="align-self:center;background-color: aquamarine; width:1em; height:1em;"></div>
+						<div style="flex: 1">Spices</div>
+						<div class="color_square" style="align-self:center;background-color: pink; width:1em; height:1em;"></div>
+						<div style="flex: 1">Malty</div>
+					</div>
 				</div>
+
 				<div id="hidden_div_4" class="hidden">
-					<div class="warning_label"></div>
+
 				  <nav class="radial_menu"  id = "map_style_chooser">
 					  <ul>
-						<li><a id="btn_alcohol_free">Alcohol Free</a></li>
-						<li><a id="btn_ale">Ale</a></li>
-						<li><a id="btn_Ambree">Ambree</a></li>
-						<li><a id="btn_belgian">Belgian</a></li>
-						<li><a id="btn_boozy">Boozy</a></li>
-						<li><a id="btn_ipa">IPA</a></li>
-						<li><a id="btn_lager">Lager</a></li>
-						<li><a id="btn_other">Other</a></li>
-						<li><a id="btn_sour">Sour</a></li>
-						<li><a id="btn_stout">Stout</a></li>
-						<li><a id="btn_wheat">Wheat Beer</a></li>
-						<li><a id="btn_winter">Winter Beer</a></li>
+						<li><a id="btn4_alcohol_free">Alcohol Free</a></li>
+						<li><a id="btn4_ale">Ale</a></li>
+						<li><a id="btn4_Ambree">Ambree</a></li>
+						<li><a id="btn4_belgian">Belgian</a></li>
+						<li><a id="btn4_boozy">Boozy</a></li>
+						<li><a id="btn4_ipa">IPA</a></li>
+						<li><a id="btn4_lager">Lager</a></li>
+						<li><a id="btn4_other">Other</a></li>
+						<li><a id="btn4_sour">Sour</a></li>
+						<li><a id="btn4_stout">Stout</a></li>
+						<li><a id="btn4_wheat">Wheat Beer</a></li>
+						<li><a id="btn4_winter">Winter Beer</a></li>
 					  </ul>
 					  <div id="style_choice" class="StyleChoiceContainer">Lager</div>
 				  </nav>
@@ -131,6 +195,7 @@
 				  </div>
 
 				</div>
+
 				<div id="RadialContainer">
 				<div id="hidden_div_5" class="hidden">
 					<div class="warning_label"></div>
@@ -206,18 +271,19 @@
 						<input name="i" type="range" min="0" max="200" value="0" step="1" style="width: 180px;">
 					</p>
 				</div>
-				<div class="step" data-step="4">
-					<p>
+				<div class="step" data-step="4" style = 'flex-direction: column;'>
+					<p  style="display:block">
 						4. Map per style. Having chosen the style we want, we can now look for which country does the best beers of this style.
-						<form>
-  							<input type="radio" id="legend" name="legend_size" value=3>
-  							<label for="n1">Legend precision : 3</label><br>
-  							<input type="radio" id="legend" name="legend_size" value=4>
-  							<label for="n2">Legend precision : 4</label><br>
-  							<input type="radio" id="legend" name="legend_size" value=5>
-  							<label for="n3">Legend precision : 5</label><br>
-						</form>
 					</p>
+					<form style="display:flex">
+						<div>Legend size : </div><br>
+						<input type="radio" id="legend" name="legend_size" value=3>
+						<label for="n1"> 3*3 </label><br>
+						<input type="radio" id="legend" name="legend_size" value=4>
+						<label for="n2">4*4</label><br>
+						<input type="radio" id="legend" name="legend_size" value=5>
+						<label for="n3">5*5</label><br>
+				  </form>
 				</div>
 				<div class="step" data-step="5">
 					<p>
@@ -233,6 +299,8 @@
 	<script src="website/src/source.js"></script>
 	<script src="website/heatmap/heatmap.js"></script>
 	<script src="website/violin/violin_plot.js"></script>
+	<script src="website/regression/regression.js"></script>
+	<script src="website/chord/chord.js"></script>
 </body>
 
 </html>

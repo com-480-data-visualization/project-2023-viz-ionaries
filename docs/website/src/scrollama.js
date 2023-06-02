@@ -11,7 +11,7 @@ var scroller = scrollama();
 // generic window resize listener event
 function handleResize() {
 	// 1. update height of step elements
-	var stepH = Math.floor(window.innerHeight * 0.75);
+	var stepH = Math.floor(window.innerHeight * 2);
 	step.style("height", stepH + "px");
 
 	var figureHeight = window.innerHeight / 1.05;
@@ -27,7 +27,6 @@ function handleResize() {
 
 // scrollama event handlers
 function handleStepEnter(response) {
-	console.log(response);
 	// response = { element, direction, index }
 
 	// add color to current step only
@@ -64,7 +63,6 @@ function show_div(figure, divId) {
 	// and hide them with a transition
 	shownDivs.classed('show', false);
 
-	console.log(divId);
 	var div = document.getElementById(divId);
 	div.classList.add('show');
 }

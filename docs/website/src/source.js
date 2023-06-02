@@ -4,7 +4,6 @@ let selected_styles = [];
 // create a radial button callback for the radial buttons changing the legend size
 function mapRadialButtonCallback() {
     var size = this.value;
-    console.log("radialButtonCallback: size = " + size);
     // call the map_main(3) function of file heatmap.js to update the map
     map_main(size);
 }
@@ -62,7 +61,7 @@ function multi_style_change(style_click){
     // select all .radial_menu li elements inside nav with id = "radial_graph_style_chooser"
     let multi_radial_menu = d3.select("#radial_graph_style_chooser").selectAll("li");
     // set their background to white
-    multi_radial_menu.style("background-color", "#e9c244");
+    multi_radial_menu.style("background-color", "goldenrod");
     multi_radial_menu.style("z-index", "0");
 
     let style_div = d3.selectAll("#style_label_container")
@@ -77,7 +76,7 @@ function multi_style_change(style_click){
         let selected_labels = multi_radial_menu.select('a#' + btn_id_string)
             .node()
             .parentNode;
-        selected_labels.style.setProperty("background-color", "#ac8f33");
+        selected_labels.style.setProperty("background-color", "darkgoldenrod");
         selected_labels.style.setProperty("z-index", "1");
     }
 }

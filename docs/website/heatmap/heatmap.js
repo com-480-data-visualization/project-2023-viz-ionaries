@@ -6,7 +6,6 @@ function setup_cache(n) {
 
   // Get the text of document.getElementById("style_choice") and set it as beer style
   cache.set("beer_style", document.getElementById("style_choice").innerHTML);
-  console.log("setup_cache: beer_style = " + document.getElementById("style_choice").innerHTML);
   cache.set("n", n);
   determine_ranges_and_labels([3, 3.9], [0,0.29]);
 
@@ -56,7 +55,7 @@ legend = (svg) => {
     let legendMouseOver = function(d) {
 
       let d_color = d3.select(this).attr("fill")
-      let selectedPaths = d3.selectAll("path").filter(function() {
+      let selectedPaths = d3.selectAll("path").filter(function(event) {
         return d3.select(this).attr("fill") === d_color; });
 
       d3.selectAll("path")
@@ -333,10 +332,10 @@ function get_tooltip_label(d, type) {
     }
     else {
       // round values top 2 decimals
-      let rounded_rating = Math.round(val['rating'] * 100) / 100;
-      let rounded_rel_count = Math.round(val['rel_count'] * 100) / 100;
+      let rounded_rating = Math.round(val['rating'] * 100);
+      let rounded_rel_count = Math.round(val['rel_count'] * 100);
       
-      return "Rating: " + rounded_rating + "\nRelative Production: " + rounded_rel_count;
+      return "Rating: " + rounded_rating + "\nRelative Production: " + rounded_rel_count +'%';
     }
   } 
   else {
@@ -346,9 +345,9 @@ function get_tooltip_label(d, type) {
     }
     else {
       // round values top 2 decimals
-      let rounded_rating = Math.round(val['rating'] * 100) / 100;
-      let rounded_rel_count = Math.round(val['rel_count'] * 100) / 100;
-      return "Rating: " + rounded_rating + "\nRelative Production: " + rounded_rel_count;
+      let rounded_rating = Math.round(val['rating'] * 100);
+      let rounded_rel_count = Math.round(val['rel_count'] * 100);
+      return "Rating: " + rounded_rating + "\nRelative Production: " + rounded_rel_count +'%';
     }
   };
 };
@@ -358,7 +357,7 @@ function get_tooltip_label(d, type) {
 let mouseOver = function(d) {
   let d_color = d3.select(this).attr("fill")
 
-  let selectedPaths = d3.selectAll("rect").filter(function() {
+  let selectedPaths = d3.selectAll("rect").filter(function(event) {
     return d3.select(this).attr("fill") === d_color; });
 
   d3.selectAll("path")
@@ -439,10 +438,10 @@ function color_maps(map_us, map_eu) {
 // Create the watchers for the radial list
 
 // create the function called
-function style_change(new_style, map_us, map_eu) {
+function map_style_change(new_style, map_us, map_eu) {
     // Change the text in the element with the id "style_choice", update cache['beer_style']
     cache.set('beer_style', new_style);
-
+    
     document.getElementById("style_choice").innerHTML = new_style;
     // update the color of the maps
     color_maps(map_us, map_eu);
@@ -485,41 +484,53 @@ function map_main(n) {
   Promise.all([drawMap(map_us, map_eu),load_files("website/heatmap/country_beers.csv", "country", "website/heatmap/us_beers.csv", "state")]).then(() => {
     color_maps(map_us, map_eu);
   });  
-  document.getElementById("btn_alcohol_free").addEventListener("click", function() {
-    style_change("Alcohol-free",map_us, map_eu);  });
+  document.getElementById("btn4_alcohol_free").addEventListener("click", function(event) {
+    event.stopPropagation();
+    map_style_change("Alcohol-free",map_us, map_eu);  });
 
-  document.getElementById("btn_ale").addEventListener("click", function() {
-      style_change("Ale",map_us, map_eu);  });
+  document.getElementById("btn4_ale").addEventListener("click", function(event) {
+    event.stopPropagation();
+      map_style_change("Ale",map_us, map_eu);  });
 
-  document.getElementById("btn_Ambree").addEventListener("click", function() {
-      style_change("Ambree",map_us, map_eu);  });
+  document.getElementById("btn4_Ambree").addEventListener("click", function(event) {
+    event.stopPropagation();
+      map_style_change("Ambree",map_us, map_eu);  });
 
-  document.getElementById("btn_belgian").addEventListener("click", function() {
-      style_change("Belgian Blonde",map_us, map_eu);  });
+  document.getElementById("btn4_belgian").addEventListener("click", function(event) {
+    event.stopPropagation();
+      map_style_change("Belgian Blonde",map_us, map_eu);  });
 
-  document.getElementById("btn_boozy").addEventListener("click", function() {
-      style_change("Boozy",map_us, map_eu);  });
+  document.getElementById("btn4_boozy").addEventListener("click", function(event) {
+    event.stopPropagation();
+      map_style_change("Boozy",map_us, map_eu);  });
 
-  document.getElementById("btn_ipa").addEventListener("click", function() {
-      style_change("IPA",map_us, map_eu);  });
+  document.getElementById("btn4_ipa").addEventListener("click", function(event) {
+    event.stopPropagation();
+      map_style_change("IPA",map_us, map_eu);  });
 
-  document.getElementById("btn_lager").addEventListener("click", function() {
-      style_change("Lager",map_us, map_eu);  });
+  document.getElementById("btn4_lager").addEventListener("click", function(event) {
+    event.stopPropagation();
+      map_style_change("Lager",map_us, map_eu);  });
 
-  document.getElementById("btn_other").addEventListener("click", function() {
-      style_change("Other",map_us, map_eu);  });
+  document.getElementById("btn4_other").addEventListener("click", function(event) {
+    event.stopPropagation();
+      map_style_change("Other",map_us, map_eu);  });
 
-  document.getElementById("btn_sour").addEventListener("click", function() {
-      style_change("Sour",map_us, map_eu);  });
+  document.getElementById("btn4_sour").addEventListener("click", function(event) {
+    event.stopPropagation();
+      map_style_change("Sour",map_us, map_eu);  });
 
-  document.getElementById("btn_stout").addEventListener("click", function() {
-      style_change("Stout",map_us, map_eu);  });
+  document.getElementById("btn4_stout").addEventListener("click", function(event) {
+    event.stopPropagation();
+      map_style_change("Stout",map_us, map_eu);  });
 
-  document.getElementById("btn_wheat").addEventListener("click", function() {
-      style_change("Wheat Beer",map_us, map_eu);  });
+  document.getElementById("btn4_wheat").addEventListener("click", function(event) {
+    event.stopPropagation();
+      map_style_change("Wheat Beer",map_us, map_eu);  });
 
-  document.getElementById("btn_winter").addEventListener("click", function() {
-      style_change("Winter Beer",map_us, map_eu);  });
+  document.getElementById("btn4_winter").addEventListener("click", function(event) {
+    event.stopPropagation();
+      map_style_change("Winter Beer",map_us, map_eu);  });
 };
 
 map_main(3);
