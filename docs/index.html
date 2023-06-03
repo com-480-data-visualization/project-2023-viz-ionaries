@@ -44,8 +44,10 @@
 			<div class="banner_section layout_padding">
 				<h4 class="banner_taital">Welcome to</h4>
 				<h1 class="banner_taital_1">T H E &nbsp;&nbsp; W O R L D &nbsp;&nbsp; O F &nbsp;&nbsp; B E E R</h1>
-				<p class="banner_text">Beer is a diverse world, with thousands of different types brewed globally. Aroma is a crucial aspect of beer's flavor experience, with notes such as fruity, floral, spicy, herbal, and earthy derived from ingredients like hops, malt, and yeast. 
-				<br><br>As such, The complexity and diversity of aromas found in beer make it a fascinating and enjoyable beverage to explore.
+				<p class="banner_text">Beers are renowned for their vast array of styles and sub-styles originating from various regions around the world. From light and refreshing lagers to robust and complex ales, the diversity of beer styles offers an extraordinary range of flavors, aromas, and brewing traditions.
+
+					Each beer style is characterized by unique characteristics such as color, maltiness, hoppiness, alcohol content, and fermentation methods. From the classic and well-known styles like Pilsner, IPA, and Stout to the more obscure and niche varieties like Gose, Rauchbier, and Lambic, there is something to suit every taste preference.
+				</p>
 				<div class="book_bt"><a href="https://alkypal.com.au/beer/beer-flavour-profiles.html">Learn More</a></div>
 			 </div>
 		  </div>
@@ -58,8 +60,13 @@
 					  <h1 class="about_taital"><img src="website/images/beer_full.png" style="
 						width:auto;
 						height:3rem;"> <span>About our Project</span></h1>
-					  <p class="about_text">This project aims to create a user-friendly structure that enables users to explore various aromatic and tasting profiles of different beer styles, as well as understand what makes a great beer within each style. Once the user has identified their preferred aromatic profile, our system will use regression to predict the quality of the beer that can be created to match their preference, and also suggest similar beer styles based on the aroma profile. Additionally, users will have access to information about where in the world the preferred beer style is commonly produced, as well as the best times of year to enjoy it.
+					  <p class="about_text">
+						
 
+						Here, we will be exploring the world of beer styles and their colorful aromas. You will embark on a delightful journey through different brewing cultures and traditions. Where you'll discover the distinctive qualities of regional and seasonal specialties like Belgian Trappist beers, German Weissbiers, British ales, American craft brews, and countless others.
+						
+						<br><br>By understanding and appreciating the multitude of beer styles available, you will broaden your palate, embarking on new taste adventures, and gaining a deeper appreciation for the craftsmanship and artistry behind the world's diverse beer culture.
+					  </p>
 						<!--  <div class="read_bt"><a href="#">Read More</a></div> -->
 				   </div>
 				   <div class="col">
@@ -268,34 +275,54 @@
 			<article>
 				<div class="step" data-step="0">
 					<p>
-						0. A word about the dataset.<br>
-						how many beers, what columns, etc
+						The intricacies of beer styles extend beyond the main categories, with sub-styles and variations offering even more depth. These variations can be based on regional adaptations, historical influences, innovative brewing techniques, or experimental flavor combinations.
 					</p>
+					<p>
+						On this page, we can observe a collection of various beer styles and sub-styles. It's important to note that numerous additional sub-styles are in existence; however, for the purpose of our analysis, we will focus on the ones presented here.					</p>
 				</div>
 				<div class="step" data-step="1">
 					<p>
-						1. An analysis of the different aromas.<br>
-						Display of the distributions for key aromas, as well as the distribution of the aromas of the best rated (4/5) beers
+						Every beer style possesses unique aromas that are integral to its character. These characteristic aromas contribute to the distinctiveness of each style. Consequently, certain aromas may be favored in specific styles while being less desirable in others.
+					</p>
+					<p>
+						In order to examine how aromas influence ratings within each beer style, we present the distribution of aroma intensity for each rating range. This insightful graph allows you to explore and interact with different beer styles by selecting them from the beer icon located in the top left corner. 
+					</p>
+					<p>
+						Feel free to experiment with the graph and discover how aromas impact the ratings of various beer styles!
 					</p>
 				</div>
 				<div class="step" data-step="2">
 					<p>
-						2. What aromas impact the rating in which way. <br>
-						A graph showing the coefficients in case of a fully linear regression.
+						With a comprehensive understanding of how various aromas influence ratings, the next question arises: how can we create a remarkable beer?
+					</p>
+					<p>
+						To address this, we employ linear regression techniques to analyze each beer style individually. By doing so, we gain valuable insights into the specific aromas that exert a positive or negative impact on the overall rating of a beer. 
+					</p>
+					<p>
+						Armed with this knowledge, you will be equipped to discern the key elements that constitute a "good beer" within each style. Unlocking the secrets of exceptional beer craftsmanship becomes attainable through this exploration of aroma-driven regression analysis.
 					</p>
 				</div>
 				<div class="step" data-step="3">
 					<p>
-						3. Gravity balls. Show how aromatically close different beer styles are from each other.<br>
-						Sliders for key aromas will change the transparency of each ball to try to find the beer styles that correspond to one's taste.
-						<input name="i" type="range" min="0" max="200" value="0" step="1" style="width: 180px;">
+						Now that you have gained insight into the elements that define a good beer, you may be curious about the connections and similarities that exist among different styles. How do these styles relate to one another, and what shared characteristics do they exhibit?
 					</p>
+					<p>
+						To provide answers to these questions, we will explore the aromatic similarities between each style and present them in a visually captivating chord diagram. 
+					</p>
+					<p>
+						This unique visualization offers a holistic view of the aromatic landscape of beer, enhancing your understanding by complementing the individual style analysis with a broader perspective.
+					</p>
+
 				</div>
 				<div class="step" data-step="4" style = 'flex-direction: column;'>
-					<p  style="display:block">
-						4. Map per style. Having chosen the style we want, we can now look for which country does the best beers of this style.
+					<p>
+						Now that you are familiar with the various beer styles and their characteristics, it's time to learn where to find them! We will now explore a bivariate map that showcases the regional production of different beer styles and provides insights into the quality of their craftsmanship. 					</p>
+					</p>
+					<p>
+						But that's not all – to enhance your experience, we have included interactive buttons, allowing you to adjust the precision of the legend. By utilizing these buttons, you can customize the level of detail displayed on the map, tailoring it to your preferences.
 					</p>
 					<form style="display:flex">
+
 						<div>Legend size : </div><br>
 						<input type="radio" id="legend" name="legend_size" value=3>
 						<label for="n1"> 3*3 </label><br>
@@ -307,13 +334,21 @@
 				</div>
 				<div class="step" data-step="5">
 					<p>
-						5. Seasonality. For a given style, how does the time of year affect the consumption and the attractiveness?
+						Now let's delve into the intriguing aspect of seasonality and its impact on the consumption and allure of beer within a specific style. Have you ever wondered how the time of year influences people's preferences and the overall appeal of a particular beer style? We will now explore this fascinating phenomenon.
+					</p>
+					<p>
+						To do so, we will examine the seasonal popularity of each beer style and present it in a visually appealing radial graph. This visualization allows you to explore the seasonal trends of each style and discover how they change throughout the year.
 					</p>
 				</div>
 			</article>
 		</section>
 
-		<section id="outro"></section>
+		<section id="outro">
+			Our exploration of the diverse world of beer has provided valuable insights into what makes a good beer, the aromatic similarities between styles, the geographic origins of beer production, and the influence of seasonality on consumption. This comprehensive journey has deepened our understanding and appreciation of the intricate aspects that contribute to the captivating realm of beer. Cheers to the multifaceted and ever-evolving world of brews!
+		</section>
+		<div>
+			by : Nicolas Termote and Michel Morales
+		</div>
 	</main>
 	<script src="website/src/scrollama.js"></script>
 	<script src="website/src/source.js"></script>
