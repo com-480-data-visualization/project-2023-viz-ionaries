@@ -4,7 +4,7 @@
 | -------------- | ------ |
 | Nicolas Termote | 301581|
 | Michel Morales | 283657 |
-| ~~Edouard Dufour | 295754~~ |
+| ~~Edouard Dufour~~ | ~~295754~~ |
 
 ## Website
 
