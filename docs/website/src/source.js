@@ -43,7 +43,7 @@ async function display_warning(text){
     warning.style("opacity", "0");
 }
 
-function multi_style_change(style_click){
+function rad_multi_style_change(style_click){
     // if the style is already selected, remove it from the list
     if (selected_styles.includes(style_click)){
         selected_styles = selected_styles.filter(e => e !== style_click);
@@ -82,40 +82,40 @@ function multi_style_change(style_click){
 }
 
 document.getElementById("btn5_alcohol_free").addEventListener("click", function() {
-    multi_style_change("Alcohol_free");  });
+    rad_multi_style_change("Alcohol_free");  });
 
   document.getElementById("btn5_ale").addEventListener("click", function() {
-    multi_style_change("Ale");  });
+    rad_multi_style_change("Ale");  });
 
   document.getElementById("btn5_ambree").addEventListener("click", function() {
-    multi_style_change("Ambree");  });
+    rad_multi_style_change("Ambree");  });
 
   document.getElementById("btn5_belgian").addEventListener("click", function() {
-    multi_style_change("Belgian Blonde");  });
+    rad_multi_style_change("Belgian Blonde");  });
 
   document.getElementById("btn5_boozy").addEventListener("click", function() {
-    multi_style_change("Boozy");  });
+    rad_multi_style_change("Boozy");  });
 
   document.getElementById("btn5_ipa").addEventListener("click", function() {
-    multi_style_change("IPA");  });
+    rad_multi_style_change("IPA");  });
 
   document.getElementById("btn5_lager").addEventListener("click", function() {
-    multi_style_change("Lager");  });
+    rad_multi_style_change("Lager");  });
 
   document.getElementById("btn5_other").addEventListener("click", function() {
-    multi_style_change("Other");  });
+    rad_multi_style_change("Other");  });
 
   document.getElementById("btn5_sour").addEventListener("click", function() {
-    multi_style_change("Sour");  });
+    rad_multi_style_change("Sour");  });
 
   document.getElementById("btn5_stout").addEventListener("click", function() {
-    multi_style_change("Stout");  });
+    rad_multi_style_change("Stout");  });
 
   document.getElementById("btn5_wheat").addEventListener("click", function() {
-    multi_style_change("Wheat Beer");  });
+    rad_multi_style_change("Wheat Beer");  });
 
   document.getElementById("btn5_winter").addEventListener("click", function() {
-    multi_style_change("Winter Beer");  });
+    rad_multi_style_change("Winter Beer");  });
 
 
 setup_radial_graph();
