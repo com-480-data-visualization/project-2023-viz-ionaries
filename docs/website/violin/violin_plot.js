@@ -1,89 +1,92 @@
-
+var violin_aroma = "Fruits";
+var violin_style = "Sour"
 // set the dimensions and margins of the graph
 var margin = {top: 10, right: 30, bottom: 30, left: 40},
-    violin_width = 460 - margin.left - margin.right,
-    violin_height = 400 - margin.top - margin.bottom;
+    violin_width = 700 - margin.left - margin.right,
+    violin_height = 600 - margin.top - margin.bottom;
 
-// append the svg object to the body of the page
-var svg = d3.select("#violin_plot")
+
+
+// declare function 
+function violin_plot(style, aroma){
+  // add the title
+  d3.select("#violin_plot_title").text("Violin Plot of " + aroma + " for " + style + " Beers");
+    // append the svg object to the body of the page
+  var svg = d3.select("#violin_plot")
   .append("svg")
     .attr("width", violin_width + margin.left + margin.right)
     .attr("height", violin_height + margin.top + margin.bottom)
   .append("g")
     .attr("transform",
           "translate(" + margin.left + "," + margin.top + ")");
+  // Read the data and compute summary statistics for each specie
+  d3.csv("website/violin/data/"+ aroma + "_" + style+".csv").then(function(data) {
+      console.log(typeof(data))
+    // Build and Show the Y scale
+    var y = d3.scaleLinear()
+      .domain([0,0.8])          // Note that here the Y scale is set manually
+      .range([violin_height, 0])
+    svg.append("g").call( d3.axisLeft(y) )
 
-// Read the data and compute summary statistics for each specie
-d3.csv("preprocessing/data/website_preparation/violin2/Sweet_Winter Beer.csv").then(function(data) {
-    console.log(typeof(data))
-  // Build and Show the Y scale
-  var y = d3.scaleLinear()
-    .domain([0,1])          // Note that here the Y scale is set manually
-    .range([violin_height, 0])
-  svg.append("g").call( d3.axisLeft(y) )
+    // Build and Show the X scale. It is a band scale like for a boxplot: each group has an dedicated RANGE on the axis. This range has a length of x.bandwidth
+    var x = d3.scaleBand()
+      .range([ 0, violin_width ])
+      .domain(["3.0", "3.5", "4.0", "4.5", "5.0"])
+      .padding(0.05)     // This is important: it is the space between 2 groups. 0 means no padding. 1 is the maximum.
+    svg.append("g")
+      .attr("transform", "translate(0," + violin_height + ")")
+      .call(d3.axisBottom(x))
 
-  // Build and Show the X scale. It is a band scale like for a boxplot: each group has an dedicated RANGE on the axis. This range has a length of x.bandwidth
-  var x = d3.scaleBand()
-    .range([ 0, violin_width ])
-    .domain(["3.0", "3.5", "4.0", "4.5", "5.0"])
-    .padding(0.05)     // This is important: it is the space between 2 groups. 0 means no padding. 1 is the maximum.
-  svg.append("g")
-    .attr("transform", "translate(0," + violin_height + ")")
-    .call(d3.axisBottom(x))
+      
+    // Features of the histogram
+    var histogram = d3.histogram()
+          .domain(y.domain())
+          .thresholds(y.ticks(20))    // Important: how many bins approx are going to be made? It is the 'resolution' of the violin plot
+          .value(d => d)
 
-  // Features of the histogram
-  var histogram = d3.histogram()
-        .domain(y.domain())
-        .thresholds(y.ticks(20))    // Important: how many bins approx are going to be made? It is the 'resolution' of the violin plot
-        .value(d => d)
+    // Compute the binning for each group of the dataset
+    var sumstat = d3.nest()  // nest function allows to group the calculation per level of a factor
+      .key(function(d) { return d.overall_step;})
+      .rollup(function(d) {   // For each key..
+        input = d.map(function(g) { return g[aroma];})    // Keep the variable called Sepal_Length
+        bins = histogram(input)   // And compute the binning on it.
+        return(bins)
+      })
+      .entries(data)
+      console.log("sumstat passed")
+    // What is the biggest number of value in a bin? We need it cause this value will have a width of 100% of the bandwidth.
+    var maxNum = 0
+    for ( i in sumstat ){
+      allBins = sumstat[i].value
+      lengths = allBins.map(function(a){return a.length;})
+      longuest = d3.max(lengths)
+      if (longuest > maxNum) { maxNum = longuest }
+    }
 
-  // Compute the binning for each group of the dataset
-  var sumstat = d3.nest()  // nest function allows to group the calculation per level of a factor
-    .key(function(d) { return d.overall_step;})
-    .rollup(function(d) {   // For each key..
-      input = d.map(function(g) { return g["Sweet"];})    // Keep the variable called Sepal_Length
-      bins = histogram(input)   // And compute the binning on it.
-      return(bins)
-    })
-    .entries(data)
-    console.log("sumstat passed")
-  // What is the biggest number of value in a bin? We need it cause this value will have a width of 100% of the bandwidth.
-  var maxNum = 0
-  for ( i in sumstat ){
-    allBins = sumstat[i].value
-    lengths = allBins.map(function(a){return a.length;})
-    longuest = d3.max(lengths)
-    if (longuest > maxNum) { maxNum = longuest }
-  }
+    // The maximum width of a violin must be x.bandwidth = the width dedicated to a group
+    var xNum = d3.scaleLinear()
+      .range([0, x.bandwidth()])
+      .domain([-maxNum,maxNum])
 
-  // The maximum width of a violin must be x.bandwidth = the width dedicated to a group
-  var xNum = d3.scaleLinear()
-    .range([0, x.bandwidth()])
-    .domain([-maxNum,maxNum])
-
-  // Add the shape to this svg!
-  svg
-    .selectAll("myViolin2")
-    .data(sumstat)
-    .enter()        // So now we are working group per group
-    .append("g")
-      .attr("transform", function(d){ return("translate(" + x(d.key) +" ,0)") } ) // Translation on the right to be at the group position
-    .append("path")
-        .datum(function(d){ return(d.value)})     // So now we are working bin per bin
-        .style("stroke", "none")
-        .style("fill","#69b3a2")
-        .attr("d", d3.area()
-            .x0(function(d){ return(xNum(-d.length)) } )
-            .x1(function(d){ return(xNum(d.length)) } )
-            .y(function(d){ return(y(d.x0)) } )
-            .curve(d3.curveCatmullRom)    // This makes the line smoother to give the violin appearance. Try d3.curveStep to see the difference
-        )
-})
-
-
-
-
-
+    // Add the shape to this svg!
+    svg
+      .selectAll("myViolin2")
+      .data(sumstat)
+      .enter()        // So now we are working group per group
+      .append("g")
+        .attr("transform", function(d){ return("translate(" + x(d.key) +" ,0)") } ) // Translation on the right to be at the group position
+      .append("path")
+          .datum(function(d){ return(d.value)})     // So now we are working bin per bin
+          .style("stroke", "none")
+          .style("fill","#69b3a2")
+          .attr("d", d3.area()
+              .x0(function(d){ return(xNum(-d.length)) } )
+              .x1(function(d){ return(xNum(d.length)) } )
+              .y(function(d){ return(y(d.x0)) } )
+              .curve(d3.curveCatmullRom)    // This makes the line smoother to give the violin appearance. Try d3.curveStep to see the difference
+          )
+  })
+}
 
 
 
@@ -129,37 +132,106 @@ function vio_multi_style_change(style_click){
 }
 
 document.getElementById("btn1_alcohol_free").addEventListener("click", function() {
-  vio_multi_style_change("Alcohol_free");  });
+  vio_multi_style_change("Alcohol_free");  
+  // clear the svg container
+  d3.select("#violin_plot").selectAll("*").remove();
+  violin_style = "Alcohol-free";
+  violin_plot("Alcohol-free", violin_aroma);
+
+  });
 
 document.getElementById("btn1_ale").addEventListener("click", function() {
-  vio_multi_style_change("Ale");  });
+  vio_multi_style_change("Ale");
+  d3.select("#violin_plot").selectAll("*").remove();
+  violin_style = "Ale";
+  violin_plot("Ale", violin_aroma);
+});
 
 document.getElementById("btn1_ambree").addEventListener("click", function() {
-  vio_multi_style_change("Ambree");  });
+  vio_multi_style_change("Ambree");  
+  d3.select("#violin_plot").selectAll("*").remove();
+  violin_style = "Ambree";
+  violin_plot("Ambree", violin_aroma);});
 
 document.getElementById("btn1_belgian").addEventListener("click", function() {
-  vio_multi_style_change("Belgian Blonde");  });
+  vio_multi_style_change("Belgian Blonde");  
+  d3.select("#violin_plot").selectAll("*").remove();
+  violin_style = "Belgian Blonde";
+  violin_plot("Belgian Blonde", violin_aroma);});
 
 document.getElementById("btn1_boozy").addEventListener("click", function() {
-  vio_multi_style_change("Boozy");  });
+  vio_multi_style_change("Boozy");
+  d3.select("#violin_plot").selectAll("*").remove();
+  violin_style = "Boozy";
+  violin_plot("Boozy", violin_aroma);});
 
 document.getElementById("btn1_ipa").addEventListener("click", function() {
-  vio_multi_style_change("IPA");  });
+  vio_multi_style_change("IPA");
+  d3.select("#violin_plot").selectAll("*").remove();
+  violin_style = "IPA";
+  violin_plot("IPA", violin_aroma);});
 
 document.getElementById("btn1_lager").addEventListener("click", function() {
-  vio_multi_style_change("Lager");  });
+  vio_multi_style_change("Lager");
+  d3.select("#violin_plot").selectAll("*").remove();
+  violin_style = "Lager";
+  violin_plot("Lager", violin_aroma);});
 
 document.getElementById("btn1_other").addEventListener("click", function() {
-  vio_multi_style_change("Other");  });
+  vio_multi_style_change("Other");
+  d3.select("#violin_plot").selectAll("*").remove();
+  violin_style = "Other";
+  violin_plot("Other", violin_aroma);});
 
 document.getElementById("btn1_sour").addEventListener("click", function() {
-  vio_multi_style_change("Sour");  });
+  vio_multi_style_change("Sour");
+  d3.select("#violin_plot").selectAll("*").remove();
+  violin_style = "Sour";
+  violin_plot("Sour", violin_aroma);});
 
 document.getElementById("btn1_stout").addEventListener("click", function() {
-  vio_multi_style_change("Stout");  });
+  vio_multi_style_change("Stout");
+  d3.select("#violin_plot").selectAll("*").remove();
+  violin_style = "Stout";
+  violin_plot("Stout", violin_aroma);});
 
 document.getElementById("btn1_wheat").addEventListener("click", function() {
-  vio_multi_style_change("Wheat Beer");  });
+  vio_multi_style_change("Wheat Beer");
+  d3.select("#violin_plot").selectAll("*").remove();
+  violin_style = "Wheat Beer";
+  violin_plot("Wheat Beer", violin_aroma);});
 
 document.getElementById("btn1_winter").addEventListener("click", function() {
-  vio_multi_style_change("Winter Beer");  });
+  vio_multi_style_change("Winter Beer");
+  d3.select("#violin_plot").selectAll("*").remove();
+  violin_style = "Winter Beer";
+  violin_plot("Winter Beer", violin_aroma);});
+
+// Get all the radio buttons
+const form = document.getElementById("aroma_selector");
+
+const radioButtons = form.querySelectorAll('input[type="radio"]');
+
+
+// Attach a click event listener to each radio button
+radioButtons.forEach(button => {
+  button.addEventListener('click', () => {
+    // Check if the button is selected
+    if (button.checked) {
+      // clear the svg container
+      d3.select("#violin_plot").selectAll("*").remove();
+      // Get the value of the selected radio button
+      let selectedValue = button.value;
+      violin_aroma = selectedValue;
+      // Call the function with the selected value  
+      violin_plot(violin_style, selectedValue)
+
+
+    }
+  });
+});
+
+// Mark the selected radio button as checked
+document.getElementById("fruits").checked = true;
+
+violin_plot(violin_style, violin_aroma);
