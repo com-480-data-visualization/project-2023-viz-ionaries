@@ -77,6 +77,27 @@
 					<p>Tableau variables</p>
 				</div>
 				<div id="hidden_div_1" class="hidden">
+					<div class="warning_label"></div>
+					<!-- Create 11 rows of 3 columns-->
+					<nav class="radial_menu"  id = "violin_graph_style_chooser">
+						<ul>
+						  <li><a id="btn1_alcohol_free">Alcohol Free</a></li>
+						  <li><a id="btn1_ale">Ale</a></li>
+						  <li><a id="btn1_ambree">Ambree</a></li>
+						  <li><a id="btn1_belgian">Belgian</a></li>
+						  <li><a id="btn1_boozy">Boozy</a></li>
+						  <li><a id="btn1_ipa">IPA</a></li>
+						  <li><a id="btn1_lager">Lager</a></li>
+						  <li><a id="btn1_other">Other</a></li>
+						  <li><a id="btn1_sour">Sour</a></li>
+						  <li><a id="btn1_stout">Stout</a></li>
+						  <li><a id="btn1_wheat">Wheat Beer</a></li>
+						  <li><a id="btn1_winter">Winter Beer</a></li>
+						</ul>
+					</nav>
+					<!-- Center all child divs of style_label_container-->
+					<div id = "vio_style_label_container" style="flex:1"></div>
+
 					<div id="violin_plot" style="flex:1; position:absolute; top:50%; left:50%; transform: translate(-50%, -50%)">
 						<svg id="plot2"></svg>
 					</div>

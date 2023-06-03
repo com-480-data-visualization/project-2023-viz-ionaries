@@ -1,12 +1,12 @@
 
-let width = 1000
-let height = width
+let chord_width = 1000
+let chord_height = chord_width
 
 let beers =  ['Alcohol-free', 'Ale', 'Ambree', 'Belgian Blonde', 'Boozy', 'IPA',   'Lager',     'Sour',    'Stout', 'Wheat Beer', 'Winter Beer'];
 let main_aromas = ['Hoppy', ' Hoppy', 'Hoppy',      'Sweet',     'Sweet', 'Hoppy', 'Hoppy',     'Sour',    'Body',    'Fruits',     'Spices'];
 let main_colors = ['olive',  'olive', 'olive',       'purple',   'purple', 'olive', 'olive'  ,  'yellow',  'blue',     'red',     'aquamarine']
 
-let innerRadius = Math.min(width, height) * 0.4 - 90
+let innerRadius = Math.min(chord_width, chord_height) * 0.4 - 90
 let outerRadius = innerRadius + 6
 
 let three_color_cycler = d3.scaleOrdinal()
@@ -46,7 +46,7 @@ d3.csv("website/chord/aroma_similarity.csv").then(function(data) {
     }
 
     const svg = d3.create("svg")
-    .attr("viewBox", [-width / 2, -height / 2, width, height]);
+    .attr("viewBox", [-chord_width / 2, -chord_height / 2, chord_width, chord_height]);
 
     let chords = chord(matrix)
     console.log("chords");
