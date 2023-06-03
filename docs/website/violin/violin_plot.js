@@ -1,20 +1,22 @@
-
+var violin_aroma = "Fruits";
+var violin_style = "Sour"
 // set the dimensions and margins of the graph
 var margin = {top: 10, right: 30, bottom: 30, left: 40},
     violin_width = 700 - margin.left - margin.right,
     violin_height = 600 - margin.top - margin.bottom;
 
-// append the svg object to the body of the page
-var svg = d3.select("#violin_plot")
+
+
+// declare function 
+function violin_plot(style, aroma){
+    // append the svg object to the body of the page
+  var svg = d3.select("#violin_plot")
   .append("svg")
     .attr("width", violin_width + margin.left + margin.right)
     .attr("height", violin_height + margin.top + margin.bottom)
   .append("g")
     .attr("transform",
           "translate(" + margin.left + "," + margin.top + ")");
-
-// declare function 
-function violin_plot(style, aroma){
   // Read the data and compute summary statistics for each specie
   d3.csv("website/violin/data/"+ aroma + "_" + style+".csv").then(function(data) {
       console.log(typeof(data))
@@ -83,7 +85,6 @@ function violin_plot(style, aroma){
   })
 }
 
-violin_plot("Sour", "Fruits")
 
 
 
@@ -134,10 +135,18 @@ function vio_multi_style_change(style_click){
 }
 
 document.getElementById("btn1_alcohol_free").addEventListener("click", function() {
-  vio_multi_style_change("Alcohol_free");  });
+  vio_multi_style_change("Alcohol_free");  
+  // clear the svg container
+  d3.select("#violin_plot").selectAll("*").remove();
+  violin_plot("Alcohol-free", violin_aroma);
+
+  });
 
 document.getElementById("btn1_ale").addEventListener("click", function() {
-  vio_multi_style_change("Ale");  });
+  vio_multi_style_change("Ale");
+  d3.select("#violin_plot").selectAll("*").remove();
+  violin_plot("Ale", violin_aroma);
+});
 
 document.getElementById("btn1_ambree").addEventListener("click", function() {
   vio_multi_style_change("Ambree");  });
@@ -168,3 +177,27 @@ document.getElementById("btn1_wheat").addEventListener("click", function() {
 
 document.getElementById("btn1_winter").addEventListener("click", function() {
   vio_multi_style_change("Winter Beer");  });
+
+
+// Get all the radio buttons
+const form = document.getElementById("aroma_selector");
+
+const radioButtons = form.querySelectorAll('input[type="radio"]');
+
+
+// Attach a click event listener to each radio button
+radioButtons.forEach(button => {
+  button.addEventListener('click', () => {
+    // Check if the button is selected
+    if (button.checked) {
+      // clear the svg container
+      d3.select("#violin_plot").selectAll("*").remove();
+      // Get the value of the selected radio button
+      let selectedValue = button.value;
+      // Call the function with the selected value  
+      violin_plot(violin_style, selectedValue)
+
+
+    }
+  });
+});
