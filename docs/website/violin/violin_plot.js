@@ -14,7 +14,7 @@ var svg = d3.select("#violin_plot")
           "translate(" + margin.left + "," + margin.top + ")");
 
 // Read the data and compute summary statistics for each specie
-d3.csv("preprocessing/data/website_preparation/violin2/Sweet_Winter Beer.csv", function(data) {
+d3.csv("preprocessing/data/website_preparation/violin2/Sweet_Winter Beer.csv").then(function(data) {
     console.log(typeof(data))
   // Build and Show the Y scale
   var y = d3.scaleLinear()
