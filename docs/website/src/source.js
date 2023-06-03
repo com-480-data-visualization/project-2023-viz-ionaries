@@ -25,6 +25,24 @@ function setup_radial_graph(){
 }
 
 
+function draw_data_points(container, bubble_beer_style, distance) {
+  d3.csv("website/src/bubble_chart/style_week_grade_"+ bubble_beer_style + ".csv").then(function(data) {
+
+    // get max and minimal score
+    var max_score = d3.max(data, function(d) { return d.score; });
+    var min_score = d3.min(data, function(d) { return d.score; });
+    // create linear scale for the score
+    var score_scale = d3.scaleLinear().domain([min_score, max_score]).range([5, 40]);
+    container.append("div").attr("class", "bubble_m").style("--i", 13).style("--radius", Math.ceil(parseFloat(score_scale(data[11].score)))+"px").style("--distance", distance+"px");
+
+    for (var i = 0; i < 52; i++) {
+        // create a new div element with class = "bubble" and append it to bubble_container
+        container.append("div").attr("class", "bubble_m").style("--i", i).style("--radius", Math.ceil(parseFloat(score_scale(data[i].score)))+"px").style("--distance", distance+"px");
+    }
+  
+  });
+}
+
 function update_radial_graph() {
   // Draw a bubble in the middle of the svg
   let bubble_container = d3.select("#bubble_container");
@@ -33,21 +51,15 @@ function update_radial_graph() {
   // create a new div element with class = "bubble" and append it to bubble_container
   //bubble_container.append("div").attr("class", "bubble_m").style("--i", 26).style("--radius", 10+"px");
   //bubble_container.append("div").attr("class", "bubble_m").style("--i", 0);
-  d3.csv("website/src/bubble_chart/style_week_grade_Ale.csv").then(function(data) {
 
-    // get max and minimal score
-    var max_score = d3.max(data, function(d) { return d.score; });
-    var min_score = d3.min(data, function(d) { return d.score; });
-    // create linear scale for the score
-    var score_scale = d3.scaleLinear().domain([min_score, max_score]).range([5, 26]);
-    bubble_container.append("div").attr("class", "bubble_m").style("--i", 13).style("--radius", Math.ceil(parseFloat(score_scale(data[11].score)))+"px");
+  // Linear scale 
+  for(var i = 0; i < selected_styles.length; i++){
+    draw_data_points(bubble_container, selected_styles[i], 80 + i * 100 /(selected_styles.length));
+    console.log(80 + i * 100 /(selected_styles.length))
 
-    for (var i = 0; i < 52; i++) {
-        // create a new div element with class = "bubble" and append it to bubble_container
-        bubble_container.append("div").attr("class", "bubble_m").style("--i", i).style("--radius", Math.ceil(parseFloat(score_scale(data[i].score)))+"px");
-    }
+  }
+
   
-  });
 
 
 
