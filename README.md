@@ -177,6 +177,9 @@ This milestone can be found in the `Dataviz_Milestone 2.pdf` file.
 
 ## Milestone 3 (4th June, 5pm)
 
+The process book can be found in the `Process_book.pdf` file.
+The Screencast can be found in the `Screencast.mp4` file.
+
 [World Of Beer Website](https://com-480-data-visualization.github.io/project-2023-viz-ionaries/)
 
 The website is designed to provide a user-friendly experience. Simply scroll down the page to explore the different visualizations and immerse yourself in our data story. Each visualization offers unique ways to interact with and interpret the data:

@@ -332,10 +332,10 @@ function get_tooltip_label(d, type) {
     }
     else {
       // round values top 2 decimals
-      let rounded_rating = Math.round(val['rating'] * 100);
+      let rounded_rating = Math.round(val['rating']*100);
       let rounded_rel_count = Math.round(val['rel_count'] * 100);
       
-      return "Rating: " + rounded_rating + "\nRelative Production: " + rounded_rel_count +'%';
+      return "Rating: " + rounded_rating/100 + "\nRelative Production: " + rounded_rel_count +'%';
     }
   } 
   else {
@@ -347,7 +347,7 @@ function get_tooltip_label(d, type) {
       // round values top 2 decimals
       let rounded_rating = Math.round(val['rating'] * 100);
       let rounded_rel_count = Math.round(val['rel_count'] * 100);
-      return "Rating: " + rounded_rating + "\nRelative Production: " + rounded_rel_count +'%';
+      return "Rating: " + rounded_rating/100 + "\nRelative Production: " + rounded_rel_count +'%';
     }
   };
 };
