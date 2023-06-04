@@ -10,7 +10,7 @@ var margin = {top: 10, right: 30, bottom: 30, left: 40},
 // declare function 
 function violin_plot(style, aroma){
   // add the title
-  d3.select("#violin_plot_title").text("Violin Plot of " + aroma + " for " + style + " Beers");
+  document.getElementById("violin_plot_title").innerHTML = "Violin Plot of " + aroma + " for " + style + " Beers";
     // append the svg object to the body of the page
   var svg = d3.select("#violin_plot")
   .append("svg")
@@ -91,44 +91,12 @@ function violin_plot(style, aroma){
 
 
 
-// CODE for beer selector
+// CODE for beer selector 
 
 function vio_multi_style_change(style_click){
-  console.log("vio_multi_style_change called")
-  // if the style is already selected, remove it from the list
-  if (selected_styles.includes(style_click)){
-      selected_styles = selected_styles.filter(e => e !== style_click);
-  }
-  else{
-      if (selected_styles.length >= 6){
-          // if the style is not selected, and there are already 3 styles selected, do nothing
-          display_warning("You can only select up to 6 styles");
-          return;
-      }
-      selected_styles.push(style_click);
-  }
 
-  // select all .radial_menu li elements inside nav with id = "radial_graph_style_chooser"
-  let multi_radial_menu = d3.select("#violin_graph_style_chooser").selectAll("li");
-  // set their background to white
-  multi_radial_menu.style("background-color", "goldenrod");
-  multi_radial_menu.style("z-index", "0");
-
-  let style_div = d3.selectAll("#vio_style_label_container")
-  // clear style_div of all elements
-  style_div.selectAll("*").remove();
-
-  for (style in selected_styles){
-      // create a new div element with class = "multi_style_label" and append it to style_div
-      style_div.append("div").attr("class", "multi_style_label").text(selected_styles[style]).style("--i", style);
-      
-      let btn_id_string = "btn1_" + selected_styles[style].split(" ")[0].toLowerCase();
-      let selected_labels = multi_radial_menu.select('a#' + btn_id_string)
-          .node()
-          .parentNode;
-      selected_labels.style.setProperty("background-color", "darkgoldenrod");
-      selected_labels.style.setProperty("z-index", "1");
-  }
+  document.getElementById("vio_style_choice").innerHTML = style_click;
+  
 }
 
 document.getElementById("btn1_alcohol_free").addEventListener("click", function() {
@@ -137,7 +105,6 @@ document.getElementById("btn1_alcohol_free").addEventListener("click", function(
   d3.select("#violin_plot").selectAll("*").remove();
   violin_style = "Alcohol-free";
   violin_plot("Alcohol-free", violin_aroma);
-
   });
 
 document.getElementById("btn1_ale").addEventListener("click", function() {
