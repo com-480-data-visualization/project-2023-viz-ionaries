@@ -63,6 +63,27 @@
     list-style: none;
   }
 
+  .bubble_m {
+    --i: 0; /* Replace with the desired value of i */
+    --radius:109px;
+    /* Calculate angle based on the value of i */
+    --angle: calc(var(--i) * 360deg / 52 - 88deg);
+    --centerX: 50%;
+    --centerY: 50%;
+
+    height: var(--radius);
+    width: var(--radius);
+    border-radius: 50%;
+  
+    position: absolute;
+    left: calc(var(--centerX) + var(--distance) * cos(var(--angle)) - var(--radius) / 2);
+    top: calc(var(--centerY) + var(--distance) * sin(var(--angle)) - var(--radius) / 2);
+    /* make the colour blue*/
+    background-color: #0000ff;
+  }
+  
+
+
   /* Add the 12 months text to the dashes */
   .month_dashes li {
     --i: 0;
@@ -91,6 +112,7 @@
     font: 1em/1 sans-serif;
     font-size: 2em;
     line-height: 1.5em;
+    
   }
 
   /* keep the element square */
