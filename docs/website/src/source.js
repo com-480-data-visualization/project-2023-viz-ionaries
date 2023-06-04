@@ -27,12 +27,15 @@ function setup_radial_graph(){
 
 function draw_data_points(container, bubble_beer_style, distance, color) {
   d3.csv("website/src/bubble_chart/style_week_grade_"+ bubble_beer_style + ".csv").then(function(data) {
-
+    
     // get max and minimal score
     var max_score = d3.max(data, function(d) { return d.score; });
     var min_score = d3.min(data, function(d) { return d.score; });
+
     // create linear scale for the score
     var score_scale = d3.scaleLinear().domain([min_score, max_score]).range([5, 30]);
+    
+    // loop over the data
     for (var i = 0; i < 52; i++) {
         // create a new div element with class = "bubble_m" and append it to bubble_container
         container.append("div")
@@ -41,7 +44,6 @@ function draw_data_points(container, bubble_beer_style, distance, color) {
         .style("--distance", distance+"px")
         .style("background-color", color);
     }
-  
   });
 }
 
