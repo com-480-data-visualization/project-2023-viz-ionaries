@@ -60,8 +60,6 @@ function update_radial_graph() {
     draw_data_points(bubble_container, selected_styles[i], 80 + (i + 1) * 150 /(selected_styles.length + 1), color_palette_final2[inverse_pal]);
     inverse_pal -= 1;
   }
-
-
 }
 
 
@@ -107,7 +105,11 @@ function rad_multi_style_change(style_click){
 
     for (style in selected_styles){
         // create a new div element with class = "multi_style_label" and append it to style_div
-        style_div.append("div").attr("class", "multi_style_label").text(selected_styles[style]).style("--i", style);
+        style_div.append("div")
+        .attr("class", "multi_style_label")
+        .text(selected_styles[style])
+        .style("--i", style)
+        .style("background", color_palette_final2[selected_styles.length - style - 1]);
         
         let btn_id_string = "btn5_" + selected_styles[style].split(" ")[0].toLowerCase();
         let selected_labels = multi_radial_menu.select('a#' + btn_id_string)
