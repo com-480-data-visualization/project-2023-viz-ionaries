@@ -107,7 +107,7 @@ function rad_multi_style_change(style_click){
         .attr("class", "multi_style_label")
         .text(selected_styles[style])
         .style("--i", style)
-        .style("background", color_palette_final2[selected_styles.length - style - 1]);
+        .style("background", color_palette[selected_styles.length - style - 1]);
         
         let btn_id_string = "btn5_" + selected_styles[style].split(" ")[0].toLowerCase();
         let selected_labels = multi_radial_menu.select('a#' + btn_id_string)
