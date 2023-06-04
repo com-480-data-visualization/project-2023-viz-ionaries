@@ -173,13 +173,25 @@ Our inspiration comes from a common passion among our group, as members of Satel
 
 ## Milestone 2 (7th May, 5pm)
 
-**10% of the final grade**
-
 This milestone can be found in the `Dataviz_Milestone 2.pdf` file.
 
 ## Milestone 3 (4th June, 5pm)
 
-**80% of the final grade**
+[World Of Beer Website](https://com-480-data-visualization.github.io/project-2023-viz-ionaries/)
+
+The website is designed to provide a user-friendly experience. Simply scroll down the page to explore the different visualizations and immerse yourself in our data story. Each visualization offers unique ways to interact with and interpret the data:
+
+1. Radial Style Tree: This static visualization showcases the styles within each meta-style through yellow branches.
+
+2. Interactive Violin Plot: This plot offers two interactive functions. Firstly, the aroma can be selected using the radio buttons on the right side of the screen. Secondly, the beer style can be chosen by hovering over the beer icon in the top left corner. The violin plot displays the distribution of aroma scores in the selected beer style for each rating range. This allows for comparisons of higher and lower rated beers in terms of their aromatic scores.
+
+3. Regression Barplot: This visualization presents the regression coefficients. Negative values indicate a negative effect on the rating, while positive values indicate a positive effect. The size of the bars represents the magnitude of the effect. The regression analysis is specific to a beer style, so similarly to the violin plot, the style can be chosen using the beer icon in the top left corner.
+
+4. Chord Diagram: This static visualization demonstrates the aromatic similarities between styles. Styles with similar scores for a specific aroma are linked by chords. The thickness of the chords indicates the degree of similarity. The perimeter segments are colored based on the main aromatic profiles of each style, while the chords color reflect the aromatic profiles of the linked styles. Hovering over a style will highlight it and its links.
+
+5. Bivariate Choropleth: This visualization displays the relative production (percentage of beer style production in each country) of the selected beer style. The beer style can be chosen using the beer icon in the top left corner. Hovering over the plot reveals the country name, mean rating, relative production of the selected beer style, and highlights the corresponding legend case. The legend can also be interacted with to highlight the corresponding country. The precision of the legend can be adjusted using the radio buttons on the right side of the screen.
+
+6. Seasonal Radial Plot: This plot shows the average rating of the selected beer style for each week of the year. Beer styles can be chosen using the beer icon in the top left corner, and multiple styles can be added. The selected styles will appear as labels at the bottom of the page and as darker labels in the radial list of styles when hovering over the beer icon. A maximum of six beer styles can be chosen, and an error message will appear if this limit is exceeded. The plot represents the average rating for each week using circles of varying size, with larger circles indicating higher ratings compared to the rest of the year. The circles and labels are colored according to the selected style.
 
 
 ## Late policy
