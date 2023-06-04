@@ -3,6 +3,9 @@ let selected_styles = [];
 let color_palette = ["#EAE2B7", "#FCBF49", "#F77F00", "#D62828", "#003049"]
 let color_palette2 = ["#003049", "#D62828", "#F77F00", "#FCBF49", "#EAE2B7"]
 
+let color_palette_final = ["#264653", "#2A9D8F", "#8AB17D", "#E9C46A", "#F4A261", "#E76F51"]
+let color_palette_final2 = ["#E76F51", "#F4A261", "#E9C46A", "#8AB17D", "#2A9D8F", "#264653"]
+
 // create a radial button callback for the radial buttons changing the legend size
 function mapRadialButtonCallback() {
     var size = this.value;
@@ -54,7 +57,7 @@ function update_radial_graph() {
   // Linear scale 
   for(var i = 0; i < selected_styles.length; i++){
 
-    draw_data_points(bubble_container, selected_styles[i], 80 + (i + 1) * 150 /(selected_styles.length + 1), color_palette2[inverse_pal]);
+    draw_data_points(bubble_container, selected_styles[i], 80 + (i + 1) * 150 /(selected_styles.length + 1), color_palette_final2[inverse_pal]);
     inverse_pal -= 1;
   }
 
