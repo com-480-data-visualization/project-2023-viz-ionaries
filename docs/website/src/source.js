@@ -1,5 +1,10 @@
 
 let selected_styles = [];
+let color_palette = ["#EAE2B7", "#FCBF49", "#F77F00", "#D62828", "#003049"]
+let color_palette2 = ["#003049", "#D62828", "#F77F00", "#FCBF49", "#EAE2B7"]
+
+let color_palette_final = ["#264653", "#2A9D8F", "#8AB17D", "#E9C46A", "#F4A261", "#E76F51"]
+let color_palette_final2 = ["#E76F51", "#F4A261", "#E9C46A", "#8AB17D", "#2A9D8F", "#264653"]
 
 // create a radial button callback for the radial buttons changing the legend size
 function mapRadialButtonCallback() {
@@ -25,7 +30,7 @@ function setup_radial_graph(){
 }
 
 
-function draw_data_points(container, bubble_beer_style, distance) {
+function draw_data_points(container, bubble_beer_style, distance, color) {
   d3.csv("website/src/bubble_chart/style_week_grade_"+ bubble_beer_style + ".csv").then(function(data) {
 
     // get max and minimal score
@@ -33,11 +38,10 @@ function draw_data_points(container, bubble_beer_style, distance) {
     var min_score = d3.min(data, function(d) { return d.score; });
     // create linear scale for the score
     var score_scale = d3.scaleLinear().domain([min_score, max_score]).range([5, 40]);
-    container.append("div").attr("class", "bubble_m").style("--i", 13).style("--radius", Math.ceil(parseFloat(score_scale(data[11].score)))+"px").style("--distance", distance+"px");
-
     for (var i = 0; i < 52; i++) {
         // create a new div element with class = "bubble" and append it to bubble_container
-        container.append("div").attr("class", "bubble_m").style("--i", i).style("--radius", Math.ceil(parseFloat(score_scale(data[i].score)))+"px").style("--distance", distance+"px");
+        container.append("div").attr("class", "bubble_m").style("--i", i).style("--radius", Math.ceil(parseFloat(score_scale(data[i].score)))+"px").style("--distance", distance+"px")
+        .style("background-color", color);
     }
   
   });
@@ -48,20 +52,14 @@ function update_radial_graph() {
   let bubble_container = d3.select("#bubble_container");
   // clear bubble_container of all elements
   bubble_container.selectAll("*").remove();
-  // create a new div element with class = "bubble" and append it to bubble_container
-  //bubble_container.append("div").attr("class", "bubble_m").style("--i", 26).style("--radius", 10+"px");
-  //bubble_container.append("div").attr("class", "bubble_m").style("--i", 0);
 
+  var inverse_pal = selected_styles.length - 1;
   // Linear scale 
   for(var i = 0; i < selected_styles.length; i++){
-    draw_data_points(bubble_container, selected_styles[i], 80 + i * 100 /(selected_styles.length));
-    console.log(80 + i * 100 /(selected_styles.length))
 
+    draw_data_points(bubble_container, selected_styles[i], 80 + (i + 1) * 150 /(selected_styles.length + 1), color_palette_final2[inverse_pal]);
+    inverse_pal -= 1;
   }
-
-  
-
-
 
 
 }
