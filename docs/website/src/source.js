@@ -1,7 +1,4 @@
-
 let selected_styles = [];
-
-
 let color_palette = ["#E76F51", "#F4A261", "#E9C46A", "#8AB17D", "#2A9D8F", "#264653"]
 
 // create a radial button callback for the radial buttons changing the legend size
@@ -35,10 +32,13 @@ function draw_data_points(container, bubble_beer_style, distance, color) {
     var max_score = d3.max(data, function(d) { return d.score; });
     var min_score = d3.min(data, function(d) { return d.score; });
     // create linear scale for the score
-    var score_scale = d3.scaleLinear().domain([min_score, max_score]).range([5, 40]);
+    var score_scale = d3.scaleLinear().domain([min_score, max_score]).range([5, 30]);
     for (var i = 0; i < 52; i++) {
-        // create a new div element with class = "bubble" and append it to bubble_container
-        container.append("div").attr("class", "bubble_m").style("--i", i).style("--radius", Math.ceil(parseFloat(score_scale(data[i].score)))+"px").style("--distance", distance+"px")
+        // create a new div element with class = "bubble_m" and append it to bubble_container
+        container.append("div")
+        .attr("class", "bubble_m").style("--i", i)
+        .style("--radius", Math.ceil(parseFloat(score_scale(data[i].score)))+"px")
+        .style("--distance", distance+"px")
         .style("background-color", color);
     }
   
@@ -52,9 +52,7 @@ function update_radial_graph() {
   bubble_container.selectAll("*").remove();
 
   var inverse_pal = selected_styles.length - 1;
-  // Linear scale 
   for(var i = 0; i < selected_styles.length; i++){
-
     draw_data_points(bubble_container, selected_styles[i], 80 + (i + 1) * 150 /(selected_styles.length + 1), color_palette[inverse_pal]);
     inverse_pal -= 1;
   }
