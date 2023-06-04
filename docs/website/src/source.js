@@ -1,5 +1,7 @@
 
 let selected_styles = [];
+let color_palette = ["#EAE2B7", "#FCBF49", "#F77F00", "#D62828", "#003049"]
+let color_palette2 = ["#003049", "#D62828", "#F77F00", "#FCBF49", "#EAE2B7"]
 
 // create a radial button callback for the radial buttons changing the legend size
 function mapRadialButtonCallback() {
@@ -25,7 +27,7 @@ function setup_radial_graph(){
 }
 
 
-function draw_data_points(container, bubble_beer_style, distance) {
+function draw_data_points(container, bubble_beer_style, distance, color) {
   d3.csv("website/src/bubble_chart/style_week_grade_"+ bubble_beer_style + ".csv").then(function(data) {
 
     // get max and minimal score
@@ -35,7 +37,8 @@ function draw_data_points(container, bubble_beer_style, distance) {
     var score_scale = d3.scaleLinear().domain([min_score, max_score]).range([5, 40]);
     for (var i = 0; i < 52; i++) {
         // create a new div element with class = "bubble" and append it to bubble_container
-        container.append("div").attr("class", "bubble_m").style("--i", i).style("--radius", Math.ceil(parseFloat(score_scale(data[i].score)))+"px").style("--distance", distance+"px");
+        container.append("div").attr("class", "bubble_m").style("--i", i).style("--radius", Math.ceil(parseFloat(score_scale(data[i].score)))+"px").style("--distance", distance+"px")
+        .style("background-color", color);
     }
   
   });
@@ -47,10 +50,12 @@ function update_radial_graph() {
   // clear bubble_container of all elements
   bubble_container.selectAll("*").remove();
 
-
+  var inverse_pal = selected_styles.length - 1;
   // Linear scale 
   for(var i = 0; i < selected_styles.length; i++){
-    draw_data_points(bubble_container, selected_styles[i], 80 + (i + 1) * 150 /(selected_styles.length + 1));
+
+    draw_data_points(bubble_container, selected_styles[i], 80 + (i + 1) * 150 /(selected_styles.length + 1), color_palette2[inverse_pal]);
+    inverse_pal -= 1;
   }
 
 
