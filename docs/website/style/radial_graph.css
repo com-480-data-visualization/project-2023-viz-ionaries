@@ -67,7 +67,7 @@
     --i: 0; /* Replace with the desired value of i */
     --radius:109px;
     /* Calculate angle based on the value of i */
-    --angle: calc(var(--i) * 360deg / 52 - 88deg);
+    --angle: calc(var(--i) * 360deg / 52 - 88.5deg);
     --centerX: 50%;
     --centerY: 50%;
 
