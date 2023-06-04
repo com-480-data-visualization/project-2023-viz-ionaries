@@ -46,20 +46,12 @@ function update_radial_graph() {
   let bubble_container = d3.select("#bubble_container");
   // clear bubble_container of all elements
   bubble_container.selectAll("*").remove();
-  // create a new div element with class = "bubble" and append it to bubble_container
-  //bubble_container.append("div").attr("class", "bubble_m").style("--i", 26).style("--radius", 10+"px");
-  //bubble_container.append("div").attr("class", "bubble_m").style("--i", 0);
+
 
   // Linear scale 
   for(var i = 0; i < selected_styles.length; i++){
-    draw_data_points(bubble_container, selected_styles[i], 80 + i * 100 /(selected_styles.length));
-    console.log(80 + i * 100 /(selected_styles.length))
-
+    draw_data_points(bubble_container, selected_styles[i], 80 + (i + 1) * 150 /(selected_styles.length + 1));
   }
-
-  
-
-
 
 
 }
